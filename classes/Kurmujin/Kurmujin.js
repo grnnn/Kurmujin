@@ -1,4 +1,4 @@
-var Bouncer = function(size) {
+var Kurmujin = function(size) {
   
   this.size = size;
   
