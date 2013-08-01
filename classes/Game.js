@@ -18,7 +18,7 @@ Game.prototype.init = function(){
 	this.camera.position.z = 1000;
 	
 	//Kurmujin Testing Code, will be deleted
-	this.kTester = new Kurmujin(30);
+	this.kTester = new Kurmujin(30, new Color(0, 0, 1));
 	this.scene.add(this.kTester.body);
 	//End
 			
