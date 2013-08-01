@@ -4,17 +4,19 @@ var Kurmujin = function(size) {
   
   var vertexShaderText = loadFile('Kurmujin.vert');
   var fragmentShaderText = loadFile('Kurmujin.frag');
-  
+  /*
   this.myMaterial = new THREE.ShaderMaterial({
     uniforms: { 
-      'size': { type: 'f', value: this.size },
+      'Size': { type: 'f', value: this.Size },
     },
     vertexShader: vertexShaderText,
     fragmentShader: fragmentShaderText
   });
+  */
   
   //This creates the Kurmujin's body
+  this.myMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
   this.geometryBody = new THREE.SphereGeometry(this.size, 20, 20);
-  this.body = new THREE.Mesh(this.geometryBody, this.material);
+  this.body = new THREE.Mesh(this.geometryBody, this.myMaterial);
 };
 
