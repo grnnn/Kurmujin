@@ -1,5 +1,5 @@
 var Game = function(){  // Game object
-	this.camera =  new THREE.PerspectiveCamera(45, 2.0/1.0, 1, 10000);
+	this.camera =  new THREE.PerspectiveCamera(45, 5.0/3.0, 1, 10000);
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
 	this.scene = new THREE.Scene();
 	
@@ -8,7 +8,7 @@ var Game = function(){  // Game object
 Game.prototype.init = function(){
 	var that = this;
 	
-	this.renderer.setSize(1200, 600);
+	this.renderer.setSize(1000, 600);
     document.body.appendChild(this.renderer.domElement);			
 	this.renderer.setClearColor(0xEEEEEE, 1.0);
     this.renderer.clear();
@@ -30,6 +30,7 @@ Game.prototype.init = function(){
 	var ambient_light = new THREE.AmbientLight(0x101010);
   	this.scene.add(ambient_light);
   	
+  	var mainMenu = new Menu();
   	
   	//setup keyboard events
     this.keys = {};
@@ -48,5 +49,6 @@ Game.prototype.init = function(){
 }
 
 Game.prototype.render = function(t){
+	this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z + 200));
 	this.renderer.render(this.scene, this.camera);
 }
