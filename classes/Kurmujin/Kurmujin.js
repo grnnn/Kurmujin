@@ -29,19 +29,22 @@ var Kurmujin = function(size, color, position) {
 };
 
 Kurmujin.prototype.move = function(x, y) {
-
   if(this.position.x < x) {
     this.body.translateX(1);
+	this.position.x++;
   };
   if(this.position.x > x) {
     this.body.translateX(-1);
+	this.position.x--;
   };
   
   if(this.position.y < y) {
     this.body.translateY(1);
+	this.position.y++;
   };
   if(this.position.y > y) {
     this.body.translateY(-1);
+	this.position.y--;
   };
   
 };
