@@ -4,6 +4,8 @@ var Kurmujin = function(size, color) {
   
   this.color = color;
   
+  this.position = {x:0, y:0, z:0};
+  
   var vertexShaderText = loadFile('classes/Kurmujin/Kurmujin.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Kurmujin.frag');
   
@@ -22,5 +24,23 @@ var Kurmujin = function(size, color) {
   //this.myMaterial = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
   this.geometryBody = new THREE.SphereGeometry(this.size, 20, 20);
   this.body = new THREE.Mesh(this.geometryBody, this.myMaterial);
+};
+
+Kurmujin.prototype.move = function(x, y) {
+
+  if(this.position.x < x) {
+    this.body.translateX(1);
+  };
+  if(this.position.x > x) {
+    this.body.translateX(-1);
+  };
+  
+  if(this.position.y < y) {
+    this.body.translateY(1);
+  };
+  if(this.position.y > y) {
+    this.body.translateY(-1);
+  };
+  
 };
 
