@@ -53,6 +53,6 @@ Game.prototype.init = function(){
 }
 
 Game.prototype.render = function(t){
-    this.kTester.move(50, 50);
+    this.kTester.update();
 	this.renderer.render(this.scene, this.camera);
 }

@@ -1,6 +1,7 @@
 var Kurmujin = function(size, color, position) {
   
   this.size = size;
+  this.startSize = size;
   
   this.color = color;
   
@@ -12,6 +13,7 @@ var Kurmujin = function(size, color, position) {
   this.myMaterial = new THREE.ShaderMaterial({
     uniforms: { 
       'Size': { type: 'f', value: this.Size },
+	  'startSize': { type: 'f', value: this.startSize },
 	  'Red': { type: 'f', value: this.color.red },
 	  'Green': { type: 'f', value: this.color.green },
 	  'Blue': { type: 'f', value: this.color.blue },
@@ -46,6 +48,11 @@ Kurmujin.prototype.move = function(x, y) {
     this.body.translateY(-1);
 	this.position.y--;
   };
-  
 };
+  
+Kurmujin.prototype.update = function() {
+  this.move(50, 50);
 
+  this.myMaterial.uniforms['Size'].value = this.size;
+  this.myMaterial.uniforms['startSize'].value = this.startSize;
+};

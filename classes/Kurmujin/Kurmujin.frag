@@ -1,4 +1,3 @@
-uniform float Size;
 uniform float Red;
 uniform float Green;
 uniform float Blue;
