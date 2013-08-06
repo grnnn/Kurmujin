@@ -54,10 +54,10 @@ Game.prototype.init = function(){
 }
 
 Game.prototype.render = function(t){
-<<<<<<< HEAD
+
     this.kTester.update();
-=======
-	this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z + 200));
->>>>>>> 1694e38c6e23561f71a0c7abff084c988e5638f8
+
+	this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z - 200));
+
 	this.renderer.render(this.scene, this.camera);
 }
