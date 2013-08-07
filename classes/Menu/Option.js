@@ -8,6 +8,8 @@ var Option = function(pos, name, func, cost, image){
 	
 	this.src = image; // image url
 	
+	this.elem = document.getElementById('gameArea');
+	
 	this.init();
 	
 }
@@ -42,16 +44,15 @@ Option.prototype.init = function(){  // creates and positions the html elements 
 	this.image.style.height = 30 + "px";
 	this.image.style.top = (this.pos+40) + "px";
 	this.image.style.left = 1150 + "px";
-	this.image.style.zIndex = 3;
 	
 	
 }
 
 Option.prototype.add = function(){ //adds the html elements to the canvas
 	var that = this;
-	document.body.appendChild(that.header);
-	document.body.appendChild(that.money);
-	document.body.appendChild(that.image);
+	this.elem.appendChild(that.header);
+	this.elem.appendChild(that.money);
+	this.elem.appendChild(that.image);
 }
 
 Option.prototype.remove = function(){ //removes the html elements from the canvas

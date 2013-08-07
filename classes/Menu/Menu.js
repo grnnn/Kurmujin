@@ -23,13 +23,16 @@ var Menu = function(){ // Main menu object
 
 
 Menu.prototype.initText = function(){ // initializes the text and color
+	var elem = document.getElementById('gameArea');
+	
 	this.image = document.createElement('img');
 	this.image.src = "resources/images/menuBackground.png";
+	this.image.style.position = 'absolute';
 	this.image.style.width = 200 + "px";
 	this.image.style.height = 600 + "px";
 	this.image.style.top = 0 + "px";
 	this.image.style.left = 1000 + "px";
-	document.body.appendChild(this.image);
+	elem.appendChild(this.image);
 	
 	this.label = document.createElement('div');
 	this.label.style.color = "white";
@@ -38,7 +41,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.label.style.top = 15 + 'px';
 	this.label.style.left = 1020 + 'px';
 	this.label.innerHTML = "Menu";
-	document.body.appendChild(this.label);
+	elem.appendChild(this.label);
 	
 	this.iImage = document.createElement('img');
 	this.iImage.src = "resources/images/lightBlueRounded.png";
@@ -47,7 +50,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.iImage.style.height = 23 + "px";
 	this.iImage.style.top = 60 + "px";
 	this.iImage.style.left = 1015 + "px";
-	document.body.appendChild(this.iImage);
+	elem.appendChild(this.iImage);
 	
 	this.items = document.createElement('div');
 	this.items.style.color = "white";
@@ -56,7 +59,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.items.style.top = 60 + 'px';
 	this.items.style.left = 1020 + 'px';
 	this.items.innerHTML = "Items";
-	document.body.appendChild(this.items);
+	elem.appendChild(this.items);
 	
 	this.pImage = document.createElement('img');
 	this.pImage.src = "resources/images/redRounded.png";
@@ -65,7 +68,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.pImage.style.height = 23 + "px";
 	this.pImage.style.top = 85 + "px";
 	this.pImage.style.left = 1015 + "px";
-	document.body.appendChild(this.pImage);
+	elem.appendChild(this.pImage);
 	
 	this.paint = document.createElement('div');
 	this.paint.style.color = "white";
@@ -74,7 +77,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.paint.style.top = 85 + 'px';
 	this.paint.style.left = 1020 + 'px';
 	this.paint.innerHTML = "Paint";
-	document.body.appendChild(this.paint);
+	elem.appendChild(this.paint);
 	
 	this.paImage = document.createElement('img');
 	this.paImage.src = "resources/images/yellowRounded.png";
@@ -83,7 +86,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.paImage.style.height = 23 + "px";
 	this.paImage.style.top = 110 + "px";
 	this.paImage.style.left = 1015 + "px";
-	document.body.appendChild(this.paImage);
+	elem.appendChild(this.paImage);
 	
 	this.pattern = document.createElement('div');
 	this.pattern.style.color = "white";
@@ -92,7 +95,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.pattern.style.top = 110 + 'px';
 	this.pattern.style.left = 1020 + 'px';
 	this.pattern.innerHTML = "Pattern";
-	document.body.appendChild(this.pattern);
+	elem.appendChild(this.pattern);
 	
 	this.hImage = document.createElement('img');
 	this.hImage.src = "resources/images/GreenRounded.png";
@@ -101,7 +104,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.hImage.style.height = 23 + "px";
 	this.hImage.style.top = 135 + "px";
 	this.hImage.style.left = 1015 + "px";
-	document.body.appendChild(this.hImage);
+	elem.appendChild(this.hImage);
 	
 	this.hardware = document.createElement('div');
 	this.hardware.style.color = "white";
@@ -110,7 +113,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.hardware.style.top = 135 + 'px';
 	this.hardware.style.left = 1020 + 'px';
 	this.hardware.innerHTML = "Hardware";
-	document.body.appendChild(this.hardware);
+	elem.appendChild(this.hardware);
 	
 }
 
@@ -146,4 +149,8 @@ Menu.prototype.changeShop = function(type){ //Changes the visible shop and the b
 					 		break;
 	}	
 	this.currentShop.makeVisible();
+}
+
+Menu.prototype.listener = function(mouseX, mouseY){
+	
 }
