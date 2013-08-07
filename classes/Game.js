@@ -5,7 +5,7 @@ var Game = function(){  // Game object
 	
 }
 
-Game.prototype.init = function(){
+Game.prototype.init = function(){ // initializes the entire game
 	var that = this;
 	
 	this.renderer.setSize(1000, 600);
@@ -26,7 +26,9 @@ Game.prototype.init = function(){
 	this.sTester = new Splotch(30, new Color(0, 1, 0), {x:100, y:50});
 	this.scene.add(this.sTester.body);
 	//End
-			
+	
+	
+	
 	this.renderer.render(this.scene, this.camera);
 	
 	this.composer = new THREE.EffectComposer(this.renderer);
@@ -37,10 +39,10 @@ Game.prototype.init = function(){
     this.spot.position.set( 0, 0, 200 );
 	this.scene.add(this.spot);
 	
-//	var ambient_light = new THREE.AmbientLight(0x101010);
-// 	this.scene.add(ambient_light);
   	
-  	var mainMenu = new Menu();
+  	this.mainMenu = new Menu();
+  	//Test line
+  	this.mainMenu.changeShop("Items");
   	
   	//setup keyboard events
     this.keys = {};
@@ -58,7 +60,7 @@ Game.prototype.init = function(){
 	
 }
 
-Game.prototype.render = function(t){
+Game.prototype.render = function(t){ // called every frame, main game loop
 
     this.kTester.update();
 	this.sTester.update();

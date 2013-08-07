@@ -19,7 +19,15 @@
 		<script src="classes/Kurmujin/Kurmujin.js"></script>
 		<script src="classes/Kurmujin/Color.js"></script>
 		<script src="classes/Kurmujin/Splotch.js"></script>
+		
+		<script src="classes/Menu/Option.js"></script>
+		<script src="classes/Menu/Shop.js"></script>
+		<script src="classes/Menu/Shops/ItemShop.js"></script>
+		<script src="classes/Menu/Shops/PaintShop.js"></script>
+		<script src="classes/Menu/Shops/PatternShop.js"></script>
+		<script src="classes/Menu/Shops/HardwareShop.js"></script>
 		<script src="classes/Menu/Menu.js"></script>
+		
 		<script src="classes/Game.js"></script>
 		
 	</head>
@@ -28,7 +36,9 @@
 		<script>
 			var game = new Game();
 			
-			
+			function doAThing(){
+				alert('doing a thing');
+			}
 		
 			function start(t){
 				var that = game;
