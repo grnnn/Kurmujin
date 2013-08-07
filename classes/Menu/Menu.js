@@ -16,7 +16,7 @@ var Menu = function(){ // Main menu object
 	this.initText();
 	this.initShops();
 	
-		
+	this.cash = 100;
 }
 
 
@@ -115,6 +115,14 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.hardware.innerHTML = "Hardware";
 	elem.appendChild(this.hardware);
 	
+	this.cCash = document.createElement('div');
+	this.cCash.style.color = "white";
+	this.cCash.style.position = 'absolute';
+	this.cCash.style.font = "20px Arial";
+	this.cCash.style.top = 550 + 'px';
+	this.cCash.style.left = 1020 + 'px';
+	this.cCash.innerHTML = "$" + this.cash;
+	elem.appendChild(this.cCash);
 }
 
 Menu.prototype.initShops = function(){ //initializes what the shops contain
@@ -151,6 +159,23 @@ Menu.prototype.changeShop = function(type){ //Changes the visible shop and the b
 	this.currentShop.makeVisible();
 }
 
-Menu.prototype.listener = function(mouseX, mouseY){
+Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of event to trigger
+	
+	/*
+	 * Simple change for checking which shop
+	 */
+	if(mouseX >= 1020 && mouseX <= 1185
+		&& mouseY >= 60 && mouseY <= 82.5) this.changeShop("Item");
+	if(mouseX >= 1020 && mouseX <= 1185
+		&& mouseY > 82.5 && mouseY <= 107.5) this.changeShop("Paint");
+	if(mouseX >= 1020 && mouseX <= 1185
+		&& mouseY > 107.5 && mouseY <= 132.5) this.changeShop("Pattern");
+	if(mouseX >= 1020 && mouseX <= 1185
+		&& mouseY > 132.5 && mouseY <= 157.5) this.changeShop("Hardware");
+		
+	/*
+	 * More complex check for each visible option
+	 */
+	//var cash = this.currentShop.listener(mouseX, mouseY);
 	
 }

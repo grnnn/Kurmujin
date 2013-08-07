@@ -2,7 +2,6 @@ var Game = function(){  // Game object
 	this.camera =  new THREE.PerspectiveCamera(45, 2.0/1.0, 1, 10000);
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
 	this.scene = new THREE.Scene();
-	
 }
 
 Game.prototype.init = function(){ // initializes the entire game
@@ -79,6 +78,8 @@ Game.prototype.init = function(){ // initializes the entire game
 Game.prototype.mainInput = function(){ //Handling the main input of the game
 	
 	if(this.mouse.leftClicked()){
+		console.log(this.mouse.x + ", " + this.mouse.y);
+		
 		if(this.mouse.x > 1000){ // Domain of Menu
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
 		}

@@ -63,3 +63,13 @@ Option.prototype.remove = function(){ //removes the html elements from the canva
 	div = document.getElementById("image"+this.name);
 	div.parentNode.removeChild(div);
 }
+
+/*Option.prototype.listener = function(mouseX, mouseY){ //check the click on the current option
+	if(mouseX > 1020 && mouseX < 1180
+		mouseY > this.pos && mouseY < this.pos + 75){
+			this.func();
+			return -1 * (this.cash);
+		}
+		return 0;
+}
+*/
