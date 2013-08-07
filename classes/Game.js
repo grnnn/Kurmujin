@@ -7,6 +7,9 @@ var Game = function(){  // Game object
 Game.prototype.init = function(){ // initializes the entire game
 	var that = this;
 	
+	this.kurmujins = [];
+	this.splotches = [];
+	
 	this.renderer.setSize(1200, 600);
     document.body.appendChild(this.renderer.domElement);			
 	this.renderer.setClearColor(0xEEEEEE, 1.0);
@@ -16,9 +19,11 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.camera.position.x = 0;
 	this.camera.position.z = 1000;
 	
+	
+	
+	
 	//Kurmujin Testing Code, will be deleted
-	this.kTester = new Kurmujin(30, new Color(0, 0, 1), {x:100, y:-50});
-	this.scene.add(this.kTester.body);
+		this.addKurmujin();
 	//End
 	
 	//Splotch Testing Code, will be deleted
@@ -76,6 +81,18 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 }
 
+Game.prototype.addKurmujin = function(){
+  this.kurmujins.push(new Kurmujin(30, new Color(0, 0, 1), {x:100, y:-50}));
+  this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
+}
+
+Game.prototype.killKurmujin = function(i){
+  this.splotches.push(new Splotch(30, new Color(0, 1, 0), this.kurmujins[i].position));
+  this.scene.add(this.splotches[this.splotches.length-1].body);
+  
+  this.scene.remove(this.kurmujins[i].body);
+}
+
 Game.prototype.mainInput = function(){ //Handling the main input of the game
 	
 	if(this.mouse.leftClicked()){
@@ -107,9 +124,11 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
       var raycaster = new THREE.Raycaster(this.camera.position, vec2);
 
 	  //check intersections
-	  if(raycaster.intersectObject(this.kTester.body).length > 0) {
-        console.log("BULSEYE!");
-      }
+	  for(var i = 0; i<this.kurmujins.length; i++) {
+	    if(raycaster.intersectObject(this.kurmujins[i].body).length > 0) {
+		  this.killKurmujin(i);
+        }
+	  }
 	}
 	
 	
@@ -117,8 +136,13 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 
 Game.prototype.render = function(t){ // called every frame, main game loop
 
-    this.kTester.update();
-	this.sTester.update();
+    for(var i = 0; i<this.kurmujins.length; i++) {
+	  this.kurmujins[i].update();
+	};
+	
+	for(var i = 0; i<this.splotches.length; i++) {
+	  this.splotches[i].update();
+	};
 	
 	this.mainMenu.update();
 
