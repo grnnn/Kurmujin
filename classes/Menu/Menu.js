@@ -13,10 +13,12 @@ var Menu = function(){ // Main menu object
 	
 	this.currentShop = this.ItemShop;
 	
+	this.cash = 100;
+	
 	this.initText();
 	this.initShops();
 	
-	this.cash = 100;
+	
 }
 
 
@@ -121,6 +123,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.cCash.style.font = "20px Arial";
 	this.cCash.style.top = 550 + 'px';
 	this.cCash.style.left = 1020 + 'px';
+	console.log(this.cash);
 	this.cCash.innerHTML = "$" + this.cash;
 	elem.appendChild(this.cCash);
 }
@@ -176,6 +179,10 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 	/*
 	 * More complex check for each visible option
 	 */
-	//var cash = this.currentShop.listener(mouseX, mouseY);
+	this.cash += this.currentShop.listener(mouseX, mouseY, this.cash);
 	
+}
+
+Menu.prototype.update = function(){
+	this.cCash.innerHTML = "$" + this.cash;
 }
