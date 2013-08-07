@@ -28,6 +28,10 @@ var Kurmujin = function(size, color, position) {
   
   this.body.translateX(this.position.x);
   this.body.translateY(this.position.y);
+  
+  this.count = 0;
+  this.randomX = 0;
+  this.randomY = 0;
 };
 
 Kurmujin.prototype.move = function(x, y) {
@@ -51,7 +55,14 @@ Kurmujin.prototype.move = function(x, y) {
 };
   
 Kurmujin.prototype.update = function() {
-  this.move(50, 50);
+  if(this.count % 100 == 0) {
+  randomX = Math.floor(Math.random()*801) - 400;
+  randomY = Math.floor(Math.random()*601) - 300;
+  console.log(randomX);
+  }
+  this.count++;
+  
+  this.move(randomX, randomY);
 
   this.myMaterial.uniforms['Size'].value = this.size;
   this.myMaterial.uniforms['startSize'].value = this.startSize;

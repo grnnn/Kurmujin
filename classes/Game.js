@@ -28,12 +28,12 @@ Game.prototype.init = function(){
     this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
     
       		
-    this.spot = new THREE.PointLight(0xffffff, 1, 1000);
+    this.spot = new THREE.PointLight(0xffffff, 1, 100);
     this.spot.position.set( 0, 0, 200 );
 	this.scene.add(this.spot);
 	
-	var ambient_light = new THREE.AmbientLight(0x101010);
-  	this.scene.add(ambient_light);
+//	var ambient_light = new THREE.AmbientLight(0x101010);
+// 	this.scene.add(ambient_light);
   	
   	var mainMenu = new Menu();
   	
