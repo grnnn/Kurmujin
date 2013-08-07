@@ -51,6 +51,7 @@ Game.prototype.init = function(){ // initializes the entire game
   	this.canvas.style.left = 0;
   	this.canvas.width = 1200;
   	this.canvas.height = 600;
+  	this.canvas.style["zIndex"] = 1;
   	this.container.appendChild(this.canvas);
   	this.ctx = this.canvas.getContext('2d');
 	
@@ -124,6 +125,8 @@ Game.prototype.render = function(t){ // called every frame, main game loop
 
     this.kTester.update();
 	this.sTester.update();
+	
+	this.mainMenu.update();
 
 	this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z - 200));
 

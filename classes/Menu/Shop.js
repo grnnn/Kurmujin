@@ -18,16 +18,17 @@ Shop.prototype.makeVisible = function(){ //makes the shop visible
 }
 
 Shop.prototype.makeInvisible = function(){ //makes the shop invisible
-	for(var i = 0; i < this.options.length; i++){
+	for(var i = 4*(this.page - 1); i < 4*this.page; i++){
+		if(i == this.options.length) break;
 		this.options[i].remove();
 	}
 }
 
-Shop.prototype.listener = function(mouseX, mouseY){ //check each visible option
+Shop.prototype.listener = function(mouseX, mouseY, Pcash){ //check each visible option
 	var cash = 0;
 	for(var i = 4*(this.page - 1); i < 4*this.page; i++){
 		if(i == this.options.length) break;
-		cash = this.options[i].listener(mouseX, mousY);
+		cash += this.options[i].listener(mouseX, mouseY, Pcash);
 	}
 	return cash;
 }

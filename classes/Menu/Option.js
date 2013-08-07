@@ -50,9 +50,10 @@ Option.prototype.init = function(){  // creates and positions the html elements 
 
 Option.prototype.add = function(){ //adds the html elements to the canvas
 	var that = this;
-	this.elem.appendChild(that.header);
-	this.elem.appendChild(that.money);
-	this.elem.appendChild(that.image);
+	var elem = document.getElementById('gameArea');
+	elem.appendChild(that.header);
+	elem.appendChild(that.money);
+	elem.appendChild(that.image);
 }
 
 Option.prototype.remove = function(){ //removes the html elements from the canvas
@@ -64,12 +65,16 @@ Option.prototype.remove = function(){ //removes the html elements from the canva
 	div.parentNode.removeChild(div);
 }
 
-/*Option.prototype.listener = function(mouseX, mouseY){ //check the click on the current option
+Option.prototype.listener = function(mouseX, mouseY, cash){ //check the click on the current option
 	if(mouseX > 1020 && mouseX < 1180
-		mouseY > this.pos && mouseY < this.pos + 75){
-			this.func();
-			return -1 * (this.cash);
+		&& mouseY > this.pos && mouseY < this.pos + 75){
+			if(cash >= this.cost){
+				this.func();
+				return (-1 * this.cost);
+			}
+			else{
+				alert("You don't has enough money :(");
+			}
 		}
 		return 0;
 }
-*/
