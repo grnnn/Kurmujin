@@ -85,8 +85,24 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
 		}
 		if(this.mouse.x <= 1000){ // Domain of Kurmujin
-			doAThing();
+			
 		}
+	}
+	
+	if(this.mouse.rightClicked()){
+	/*
+	var that = this;
+    // Figure out vector for which direction user clicked
+    var projector = new THREE.Projector();
+    var vector = new THREE.Vector3(mouse.x, mouse.y, 0);
+    console.log('Raw vector', vector.x, vector.y, vector.z);
+    projector.unprojectVector(vector, this.camera);
+    console.log('Unprojected vector', vector.x, vector.y, vector.z);
+    // Subtract camera position to get relative direction from camera
+    vector.sub(this.camera.position);
+    vector.multiplyScalar(10000.0);
+    console.log('Scaled relative vector', vector.x, vector.y, vector.z);
+	*/
 	}
 	
 	
