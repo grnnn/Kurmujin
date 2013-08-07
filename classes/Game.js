@@ -88,6 +88,17 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 		}
 	}
 	
+	if(this.mouse.rightClicked()){
+		console.log(this.mouse.x + ", " + this.mouse.y);
+		
+		if(this.mouse.x > 1000){ // Domain of Menu
+			this.mainMenu.listener(this.mouse.x, this.mouse.y);
+		}
+		if(this.mouse.x <= 1000){ // Domain of Kurmujin
+			doAThing();
+		}
+	}
+	
 	
 }
 

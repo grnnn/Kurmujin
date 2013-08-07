@@ -24,6 +24,7 @@ var Mouse = function(canvas) {
   this.x = null;
   this.y = null;
   this.hasLeftClicked = false;
+  this.hasRightClicked = false;
   canvas.addEventListener('mousedown', function(event) { //'mousemove' instead of mousedown for updating mouse.x and mouse.y
     var rect = canvas.getBoundingClientRect();
     that.x = (event.clientX - rect.left) / rect.width * 2 - 1;
@@ -38,11 +39,23 @@ var Mouse = function(canvas) {
     
     that.hasLeftClicked = true;
   }, false);
+  
+  canvas.addEventListener('oncontextmenue', function(event) { //'mousemove' instead of mousedown for updating mouse.x and mouse.y
+    that.hasRightClicked = true;
+  }, false);
 };
 
 Mouse.prototype.leftClicked = function() {
   if(this.hasLeftClicked) {
     this.hasLeftClicked = false;
+    return true;
+  }
+  return false;
+};
+
+Mouse.prototype.rightClicked = function() {
+  if(this.hasRightClicked) {
+    this.hasRightClicked = false;
     return true;
   }
   return false;
