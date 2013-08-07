@@ -80,7 +80,6 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 	
 	if(this.mouse.leftClicked()){
 		console.log(this.mouse.x + ", " + this.mouse.y);
-		console.log(this.kTester.position);
 		
 		if(this.mouse.x > 1000){ // Domain of Menu
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
@@ -96,24 +95,19 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
       // Figure out vector for which direction user clicked
       var projector = new THREE.Projector();
       var vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0);
-      console.log('Raw vector', vector.x, vector.y, vector.z);
       projector.unprojectVector(vector, this.camera);
-      console.log('Unprojected vector', vector.x, vector.y, vector.z);
 	  
       // Subtract camera position to get relative direction from camera
       vector.sub(this.camera.position);
-      vector.multiplyScalar(10000.0);
-      console.log('Scaled relative vector', vector.x, vector.y, vector.z);
+      vector.multiplyScalar(1000.0);
 	  
 	  //create raycaster
 	  var vec2 = new THREE.Vector3(vector.x, vector.y, vector.z);
       vec2.normalize();
       var raycaster = new THREE.Raycaster(this.camera.position, vec2);
-	  
-	  console.log(this.kTester.position);
 
 	  //check intersections
-	  if(raycaster.intersectObject(this.kTester).length > 0) {
+	  if(raycaster.intersectObject(this.kTester.body).length > 0) {
         console.log("BULSEYE!");
       }
 	}
