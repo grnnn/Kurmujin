@@ -21,6 +21,11 @@ Game.prototype.init = function(){
 	this.kTester = new Kurmujin(30, new Color(0, 0, 1), {x:100, y:-50});
 	this.scene.add(this.kTester.body);
 	//End
+	
+	//Splotch Testing Code, will be deleted
+	this.sTester = new Splotch(30, new Color(0, 0, 1), {x:100, y:50});
+	this.scene.add(this.sTester.body);
+	//End
 			
 	this.renderer.render(this.scene, this.camera);
 	
