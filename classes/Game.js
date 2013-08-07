@@ -23,7 +23,7 @@ Game.prototype.init = function(){
 	//End
 	
 	//Splotch Testing Code, will be deleted
-	this.sTester = new Splotch(30, new Color(0, 0, 1), {x:100, y:50});
+	this.sTester = new Splotch(30, new Color(0, 1, 0), {x:100, y:50});
 	this.scene.add(this.sTester.body);
 	//End
 			
@@ -61,6 +61,7 @@ Game.prototype.init = function(){
 Game.prototype.render = function(t){
 
     this.kTester.update();
+	this.sTester.update();
 
 	this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z - 200));
 

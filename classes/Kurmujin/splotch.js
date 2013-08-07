@@ -29,3 +29,12 @@ var Splotch = function(size, color, position) {
   this.body.translateX(this.position.x);
   this.body.translateY(this.position.y);
 };
+
+Splotch.prototype.update = function() {
+  if(this.size < this.startSize * 1.5) {
+  this.size++;
+  }
+
+  this.myMaterial.uniforms['Size'].value = this.size;
+  this.myMaterial.uniforms['startSize'].value = this.startSize;
+};
