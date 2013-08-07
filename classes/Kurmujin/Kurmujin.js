@@ -56,12 +56,12 @@ Kurmujin.prototype.move = function(x, y) {
   
 Kurmujin.prototype.update = function() {
   if(this.count % 100 == 0) {
-  randomX = Math.floor(Math.random()*801) - 400;
-  randomY = Math.floor(Math.random()*601) - 300;
+  this.randomX = Math.floor(Math.random()*1001) - 800;
+  this.randomY = Math.floor(Math.random()*601) - 300;
   }
   this.count++;
   
-  this.move(randomX, randomY);
+  this.move(this.randomX, this.randomY);
 
   this.myMaterial.uniforms['Size'].value = this.size;
   this.myMaterial.uniforms['startSize'].value = this.startSize;

@@ -24,13 +24,13 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	//Kurmujin Testing Code, will be deleted
 		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
 	//End
-	
-	//Splotch Testing Code, will be deleted
-	this.sTester = new Splotch(30, new Color(0, 1, 0), {x:100, y:50});
-	this.scene.add(this.sTester.body);
-	//End
-	
+
 	
 	
 	this.renderer.render(this.scene, this.camera);
@@ -82,12 +82,12 @@ Game.prototype.init = function(){ // initializes the entire game
 }
 
 Game.prototype.addKurmujin = function(){
-  this.kurmujins.push(new Kurmujin(30, new Color(0, 0, 1), {x:100, y:-50}));
+  this.kurmujins.push(new Kurmujin(30, new Color(0, 0, 1), {x:0, y:0}));
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
 Game.prototype.killKurmujin = function(i){
-  this.splotches.push(new Splotch(30, new Color(0, 1, 0), this.kurmujins[i].position));
+  this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position));
   this.scene.add(this.splotches[this.splotches.length-1].body);
   
   this.scene.remove(this.kurmujins[i].body);
