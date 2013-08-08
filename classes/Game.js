@@ -23,12 +23,10 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	//Kurmujin Testing Code, will be deleted
-		this.addKurmujin();
-		this.addKurmujin();
-		this.addKurmujin();
-		this.addKurmujin();
-		this.addKurmujin();
-		this.addKurmujin();
+		this.addKurmujin(30, new Color(0, 0, 1), {x:0, y:0});
+		this.addKurmujin(30, new Color(0, 1, 1), {x:0, y:0});
+		this.addKurmujin(30, new Color(1, 0, 1), {x:0, y:0});
+		this.addKurmujin(30, new Color(0, 1, 0), {x:0, y:0});
 	//End
 
 	
@@ -81,8 +79,8 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 }
 
-Game.prototype.addKurmujin = function(){
-  this.kurmujins.push(new Kurmujin(30, new Color(0, 0, 1), {x:0, y:0}));
+Game.prototype.addKurmujin = function(size, color, position){
+  this.kurmujins.push(new Kurmujin(size, color, position));
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
@@ -91,6 +89,8 @@ Game.prototype.killKurmujin = function(i){
   this.scene.add(this.splotches[this.splotches.length-1].body);
   
   this.scene.remove(this.kurmujins[i].body);
+  
+  this.kurmujins.splice(i, 1);
 }
 
 Game.prototype.mainInput = function(){ //Handling the main input of the game
