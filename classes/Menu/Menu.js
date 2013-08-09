@@ -1,4 +1,4 @@
-var Menu = function(){ // Main menu object
+var Menu = function(fcns){ // Main menu object
 	
 	
 	this.width = 200;
@@ -6,18 +6,19 @@ var Menu = function(){ // Main menu object
 	this.x = 1000;
 	this.y = 0;
 	
+	this.KurmujinShop = new Shop("Kurmujin");
 	this.ItemShop = new Shop("Item");
-	this.PaintShop = new Shop("Paint");
 	this.PatternShop = new Shop("Pattern");
 	this.HardwareShop = new Shop("Hardware");
 	
-	this.currentShop = this.ItemShop;
+	this.currentShop = this.KurmujinShop;
 	
 	this.cash = 100;
-	
+	this.fcns = fcns;
+
+		
 	this.initText();
 	this.initShops();
-	
 	
 }
 
@@ -60,7 +61,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.items.style.font = "20px Arial";
 	this.items.style.top = 60 + 'px';
 	this.items.style.left = 1020 + 'px';
-	this.items.innerHTML = "Items";
+	this.items.innerHTML = "Kurmujin";
 	elem.appendChild(this.items);
 	
 	this.pImage = document.createElement('img');
@@ -78,7 +79,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.paint.style.font = "20px Arial";
 	this.paint.style.top = 85 + 'px';
 	this.paint.style.left = 1020 + 'px';
-	this.paint.innerHTML = "Paint";
+	this.paint.innerHTML = "Item";
 	elem.appendChild(this.paint);
 	
 	this.paImage = document.createElement('img');
@@ -123,33 +124,34 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.cCash.style.font = "20px Arial";
 	this.cCash.style.top = 550 + 'px';
 	this.cCash.style.left = 1020 + 'px';
-	console.log(this.cash);
 	this.cCash.innerHTML = "$" + this.cash;
 	elem.appendChild(this.cCash);
 }
 
 Menu.prototype.initShops = function(){ //initializes what the shops contain
-	this.ItemShop.addOption("burger", doAThing, 5 , "resources/images/burger.png");
-	this.ItemShop.addOption("donut", doAThing, 10, "resources/images/donut.png");
+	var that = this;
+	this.KurmujinShop.addOption("Green", that.fcns, 5 , "resources/images/green.png");
+	this.KurmujinShop.addOption("Blue", that.fcns, 5, "resources/images/blue.png");
+	this.KurmujinShop.addOption("Red", that.fcns, 5, "resources/images/red.png");
 	
-	this.PaintShop.addOption("green", doAThing, 20, "resources/images/green.png");
-	this.PaintShop.addOption("blue", doAThing, 20, "resources/images/blue.png");
+	this.ItemShop.addOption("Burger", doAThing, 20, "resources/images/burger.png");
+	this.ItemShop.addOption("Donut", doAThing, 20, "resources/images/donut.png");
 	
-	this.PatternShop.addOption("spiral", doAThing, 50, "resources/images/spiral.png");
-	this.PatternShop.addOption("star", doAThing, 50, "resources/images/star.png");
+	this.PatternShop.addOption("Spiral", doAThing, 50, "resources/images/spiral.png");
+	this.PatternShop.addOption("Star", doAThing, 50, "resources/images/star.png");
 	
-	this.HardwareShop.addOption("connect", doAThing, 100, "resources/images/repeater.png");
+	this.HardwareShop.addOption("Connect", doAThing, 100, "resources/images/repeater.png");
 	
-	this.ItemShop.makeVisible();
+	this.KurmujinShop.makeVisible();
 }
 
 Menu.prototype.changeShop = function(type){ //Changes the visible shop and the background color of the menu
 	this.currentShop.makeInvisible();
 	switch(type){
-		case "Item": 		this.currentShop = this.ItemShop;
+		case "Kurmujins":	this.currentShop = this.KurmujinShop;
 							this.image.src = "resources/images/menuBackground.png";
 					 		break;
-		case "Paint": 		this.currentShop = this.PaintShop;
+		case "Item": 		this.currentShop = this.ItemShop;
 							this.image.src = "resources/images/redBack.png";
 					 		break;
 		case "Pattern": 	this.currentShop = this.PatternShop;
@@ -168,9 +170,9 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 	 * Simple change for checking which shop
 	 */
 	if(mouseX >= 1020 && mouseX <= 1185
-		&& mouseY >= 60 && mouseY <= 82.5) this.changeShop("Item");
+		&& mouseY >= 60 && mouseY <= 82.5) this.changeShop("Kurmujins");
 	if(mouseX >= 1020 && mouseX <= 1185
-		&& mouseY > 82.5 && mouseY <= 107.5) this.changeShop("Paint");
+		&& mouseY > 82.5 && mouseY <= 107.5) this.changeShop("Item");
 	if(mouseX >= 1020 && mouseX <= 1185
 		&& mouseY > 107.5 && mouseY <= 132.5) this.changeShop("Pattern");
 	if(mouseX >= 1020 && mouseX <= 1185
@@ -185,4 +187,8 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 
 Menu.prototype.update = function(){
 	this.cCash.innerHTML = "$" + this.cash;
+}
+
+Menu.prototype.addCash = function(amount){
+	this.cash += amount;
 }

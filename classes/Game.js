@@ -2,10 +2,13 @@ var Game = function(){  // Game object
 	this.camera =  new THREE.PerspectiveCamera(45, 2.0/1.0, 1, 10000);
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
 	this.scene = new THREE.Scene();
+	
 }
 
 Game.prototype.init = function(){ // initializes the entire game
 	var that = this;
+	
+	
 	
 	this.kurmujins = [];
 	this.splotches = [];
@@ -23,6 +26,13 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	//Kurmujin Testing Code, will be deleted
+		// this.addKurmujin(0, 0, 1);
+		// this.addKurmujin(0, 0, 1);
+		// this.addKurmujin(0, 0, 1);
+		// this.addKurmujin(0, 0, 1);
+		// this.addKurmujin(0, 0, 1);
+		// this.addKurmujin(0, 0, 1);
+		
 		this.addKurmujin();
 		this.addKurmujin();
 		this.addKurmujin();
@@ -43,7 +53,11 @@ Game.prototype.init = function(){ // initializes the entire game
     this.spot.position.set( 0, 0, 200 );
 	this.scene.add(this.spot);
 	
-	this.mainMenu = new Menu();
+	this.fcns = new Object();
+	this.fcns["addKurmujin"] = that.addKurmujin;
+	this.fcns["killKurmujin"] = that.killKurmujin;
+	
+	this.mainMenu = new Menu(that.addKurmujin);
 	
 	// Container div
   	this.container = document.getElementById('gameArea');
@@ -78,7 +92,6 @@ Game.prototype.init = function(){ // initializes the entire game
     }
   	});
   	
-	
 }
 
 Game.prototype.addKurmujin = function(){
@@ -90,7 +103,12 @@ Game.prototype.killKurmujin = function(i){
   this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position));
   this.scene.add(this.splotches[this.splotches.length-1].body);
   
+  this.mainMenu.addCash(10);
+  
   this.scene.remove(this.kurmujins[i].body);
+  
+  this.kurmujins[i] = null;
+  this.kurmujins.splice(i, 1);
 }
 
 Game.prototype.mainInput = function(){ //Handling the main input of the game
