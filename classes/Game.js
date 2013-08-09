@@ -35,7 +35,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	  
   // Add single cube
   this.cube = new THREE.Mesh(
-    new THREE.PlaneGeometry(1000, 600),
+    new THREE.PlaneGeometry(1800, 900),
     new THREE.MeshLambertMaterial({
       color: new THREE.Color(0xffffff)
     }));
