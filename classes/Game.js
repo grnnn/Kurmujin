@@ -18,14 +18,12 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.renderer.setClearColor(0xEEEEEE, 1.0);
     this.renderer.clear();
       		
-	this.camera.position.y = 0;
+	this.camera.position.y = -100;
 	this.camera.position.x = 0;
 	this.camera.position.z = 1000;
 	
-	
-	
-	
 	//Kurmujin Testing Code, will be deleted
+<<<<<<< HEAD
 		// this.addKurmujin(0, 0, 1);
 		// this.addKurmujin(0, 0, 1);
 		// this.addKurmujin(0, 0, 1);
@@ -39,6 +37,12 @@ Game.prototype.init = function(){ // initializes the entire game
 		this.addKurmujin();
 		this.addKurmujin();
 		this.addKurmujin();
+=======
+		this.addKurmujin(30, new Color(0, 0, 1), {x:0, y:0});
+		this.addKurmujin(30, new Color(0, 1, 1), {x:0, y:0});
+		this.addKurmujin(30, new Color(1, 0, 1), {x:0, y:0});
+		this.addKurmujin(30, new Color(0, 1, 0), {x:0, y:0});
+>>>>>>> b63df929d8bb9af574c1d4c736ddb062a702ada1
 	//End
 
 	
@@ -47,11 +51,19 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	this.composer = new THREE.EffectComposer(this.renderer);
     this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
-    
-      		
-    this.spot = new THREE.PointLight(0xffffff, 1, 100);
-    this.spot.position.set( 0, 0, 200 );
-	this.scene.add(this.spot);
+	  
+  // Add single cube
+  this.cube = new THREE.Mesh(
+    new THREE.PlaneGeometry(1800, 900),
+    new THREE.MeshLambertMaterial({
+      color: new THREE.Color(0xffffff)
+    }));
+  this.scene.add(this.cube);
+
+  // Add a light source
+  var light = new THREE.PointLight(0xffffff);
+  light.position.set(700, 1300, 1000);
+  this.scene.add(light);
 	
 	this.fcns = new Object();
 	this.fcns["addKurmujin"] = that.addKurmujin;
@@ -94,8 +106,8 @@ Game.prototype.init = function(){ // initializes the entire game
   	
 }
 
-Game.prototype.addKurmujin = function(){
-  this.kurmujins.push(new Kurmujin(30, new Color(0, 0, 1), {x:0, y:0}));
+Game.prototype.addKurmujin = function(size, color, position){
+  this.kurmujins.push(new Kurmujin(size, color, position));
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
@@ -107,7 +119,10 @@ Game.prototype.killKurmujin = function(i){
   
   this.scene.remove(this.kurmujins[i].body);
   
+<<<<<<< HEAD
   this.kurmujins[i] = null;
+=======
+>>>>>>> b63df929d8bb9af574c1d4c736ddb062a702ada1
   this.kurmujins.splice(i, 1);
 }
 
@@ -153,7 +168,7 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 }
 
 Game.prototype.render = function(t){ // called every frame, main game loop
-
+	
     for(var i = 0; i<this.kurmujins.length; i++) {
 	  this.kurmujins[i].update();
 	};
@@ -164,7 +179,9 @@ Game.prototype.render = function(t){ // called every frame, main game loop
 	
 	this.mainMenu.update();
 
-	this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z - 200));
+	//this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z - 200));
+	
+	this.camera.lookAt(this.scene.position);
 
 	this.renderer.render(this.scene, this.camera);
 	
