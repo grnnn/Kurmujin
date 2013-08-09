@@ -130,12 +130,12 @@ Menu.prototype.initText = function(){ // initializes the text and color
 
 Menu.prototype.initShops = function(){ //initializes what the shops contain
 	var that = this;
-	this.KurmujinShop.addOption("Green", that.fcns, 5 , "resources/images/green.png");
-	this.KurmujinShop.addOption("Blue", that.fcns, 5, "resources/images/blue.png");
-	this.KurmujinShop.addOption("Red", that.fcns, 5, "resources/images/red.png");
+	this.KurmujinShop.addOption("Green", function() { that.fcns["addKurmujin"](30, new Color(0, 1, 0), {x:0, y:0}); }, 5 , "resources/images/green.png");
+	this.KurmujinShop.addOption("Blue", function() { that.fcns["addKurmujin"](30, new Color(0, 0, 1), {x:0, y:0}); }, 5, "resources/images/blue.png");
+	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
 	
 	this.ItemShop.addOption("Burger", doAThing, 20, "resources/images/burger.png");
-	this.ItemShop.addOption("Donut", doAThing, 20, "resources/images/donut.png");
+	this.ItemShop.addOption("Donut",  doAThing, 20, "resources/images/donut.png");
 	
 	this.PatternShop.addOption("Spiral", doAThing, 50, "resources/images/spiral.png");
 	this.PatternShop.addOption("Star", doAThing, 50, "resources/images/star.png");

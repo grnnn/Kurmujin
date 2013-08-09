@@ -3,8 +3,6 @@ var Game = function(){  // Game object
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
 	this.scene = new THREE.Scene();
 	
-	this.kurmujins = new Array();
-	
 }
 
 Game.prototype.init = function(){ // initializes the entire game
@@ -12,7 +10,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	
-	//this.kurmujins = [];
+	this.kurmujins = [];
 	this.splotches = [];
 	
 	this.renderer.setSize(1200, 600);
@@ -25,7 +23,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.camera.position.z = 1000;
 	
 	//Kurmujin Testing Code, will be deleted
-
+<<<<<<< HEAD
 		// this.addKurmujin(0, 0, 1);
 		// this.addKurmujin(0, 0, 1);
 		// this.addKurmujin(0, 0, 1);
@@ -33,12 +31,18 @@ Game.prototype.init = function(){ // initializes the entire game
 		// this.addKurmujin(0, 0, 1);
 		// this.addKurmujin(0, 0, 1);
 		
-
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+		this.addKurmujin();
+=======
 		this.addKurmujin(30, new Color(0, 0, 1), {x:0, y:0});
 		this.addKurmujin(30, new Color(0, 1, 1), {x:0, y:0});
 		this.addKurmujin(30, new Color(1, 0, 1), {x:0, y:0});
 		this.addKurmujin(30, new Color(0, 1, 0), {x:0, y:0});
-
+>>>>>>> b63df929d8bb9af574c1d4c736ddb062a702ada1
 	//End
 
 	
@@ -65,7 +69,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.fcns["addKurmujin"] = that.addKurmujin;
 	this.fcns["killKurmujin"] = that.killKurmujin;
 	
-	this.mainMenu = new Menu(that.fcns);
+	this.mainMenu = new Menu(that.addKurmujin);
 	
 	// Container div
   	this.container = document.getElementById('gameArea');
@@ -115,8 +119,10 @@ Game.prototype.killKurmujin = function(i){
   
   this.scene.remove(this.kurmujins[i].body);
   
-
+<<<<<<< HEAD
   this.kurmujins[i] = null;
+=======
+>>>>>>> b63df929d8bb9af574c1d4c736ddb062a702ada1
   this.kurmujins.splice(i, 1);
 }
 

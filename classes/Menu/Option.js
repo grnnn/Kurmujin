@@ -8,11 +8,14 @@ var Option = function(pos, name, func, cost, image){
 	
 	this.src = image; // image url
 	
+	
 	this.elem = document.getElementById('gameArea');
+	
 	
 	this.init();
 	
 }
+
 
 Option.prototype.init = function(){  // creates and positions the html elements correctly
 	var that = this;
