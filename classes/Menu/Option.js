@@ -1,5 +1,5 @@
 var Option = function(pos, name, func, cost, image){
-	this.pos = 80 + pos * 90; // an integer value
+	this.pos = 170 + (pos%4) * 90; // an integer value
 	this.name = name; //label of the option
 	
 	this.func = func; //the thing the option does when pressed

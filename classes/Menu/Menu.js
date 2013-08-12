@@ -18,7 +18,10 @@ var Menu = function(fcns){ // Main menu object
 
 		
 	this.initText();
+	this.initArrows();
 	this.initShops();
+	
+	this.arrowHandler(); // to the knee
 	
 }
 
@@ -121,17 +124,68 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.cCash = document.createElement('div');
 	this.cCash.style.color = "white";
 	this.cCash.style.position = 'absolute';
-	this.cCash.style.font = "20px Arial";
-	this.cCash.style.top = 550 + 'px';
+	this.cCash.style.font = "25px Arial";
+	this.cCash.style.top = 570 + 'px';
 	this.cCash.style.left = 1020 + 'px';
 	this.cCash.innerHTML = "$" + this.cash;
 	elem.appendChild(this.cCash);
+}
+
+Menu.prototype.initArrows = function(){ //initiates both of the arrows
+	this.right = document.createElement('img');
+	this.right.id = "right arrow";
+	this.right.src = "resources/images/rightArrow.png";
+	this.right.style.position = 'absolute';
+	this.right.style.width = 85 + "px";
+	this.right.style.height = 40 + "px";
+	this.right.style.top = 520 + "px";
+	this.right.style.left = 1110 + "px";
+	this.right.visible = false;
+	
+	this.left = document.createElement('img');
+	this.left.id = "left arrow";
+	this.left.src = "resources/images/leftArrow.png";
+	this.left.style.position = 'absolute';
+	this.left.style.width = 85 + "px";
+	this.left.style.height = 40 + "px";
+	this.left.style.top = 520 + "px";
+	this.left.style.left = 1010 + "px";
+	this.left.visible = false;
+	
+}
+
+Menu.prototype.rightArrowOn = function(){ //makes the right arrow visible
+	var that = this;
+	var elem = document.getElementById('gameArea');
+	elem.appendChild(that.right);
+	this.right.visible = true;
+}
+
+Menu.prototype.rightArrowOff = function(){ //makes the right arrow invisible
+	var div = document.getElementById("right arrow");
+	div.parentNode.removeChild(div);
+	this.right.visible = false;
+}
+
+Menu.prototype.leftArrowOn = function(){ //makes the left arrow visible
+	var that = this;
+	var elem = document.getElementById('gameArea');
+	elem.appendChild(that.left);
+	this.left.visible = true;
+}
+
+Menu.prototype.leftArrowOff = function(){ //makes the left arrow invisible
+	var div = document.getElementById("left arrow");
+	div.parentNode.removeChild(div);
+	this.left.visible = false;
 }
 
 Menu.prototype.initShops = function(){ //initializes what the shops contain
 	var that = this;
 	this.KurmujinShop.addOption("Green", function() { that.fcns["addKurmujin"](30, new Color(0, 1, 0), {x:0, y:0}); }, 5 , "resources/images/green.png");
 	this.KurmujinShop.addOption("Blue", function() { that.fcns["addKurmujin"](30, new Color(0, 0, 1), {x:0, y:0}); }, 5, "resources/images/blue.png");
+	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
+	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
 	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
 	
 	this.ItemShop.addOption("Burger", doAThing, 20, "resources/images/burger.png");
@@ -162,6 +216,14 @@ Menu.prototype.changeShop = function(type){ //Changes the visible shop and the b
 					 		break;
 	}	
 	this.currentShop.makeVisible();
+	this.arrowHandler();
+}
+
+Menu.prototype.arrowHandler = function(){ // decides which arrows should be on and off based on currentShop
+	if(this.currentShop.page == 1 && this.left.visible) this.leftArrowOff(); 
+	if(this.currentShop.page*4 >= this.currentShop.options.length && this.right.visible) this.rightArrowOff();
+	if(this.currentShop.page > 1 && !this.left.visible) this.leftArrowOn();
+	if(this.currentShop.page*4 < this.currentShop.options.length && !this.right.visible) this.rightArrowOn();
 }
 
 Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of event to trigger
@@ -183,6 +245,22 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 	 */
 	this.cash += this.currentShop.listener(mouseX, mouseY, this.cash);
 	
+	
+	/*
+	 * Finally, check to see if an arrow has been clicked
+	 */
+	// Also check to see if an arrow has been clicked
+	if(mouseX > 1010 && mouseX < 1095
+		&& mouseY > 520 && mouseY < 560) {
+			this.currentShop.prevPage();
+			this.arrowHandler();
+		}
+		
+	if(mouseX > 1110 && mouseX < 1195
+		&& mouseY > 520 && mouseY < 560) {
+			this.currentShop.nextPage();
+			this.arrowHandler();
+		}
 }
 
 Menu.prototype.update = function(){
@@ -192,3 +270,4 @@ Menu.prototype.update = function(){
 Menu.prototype.addCash = function(amount){
 	this.cash += amount;
 }
+

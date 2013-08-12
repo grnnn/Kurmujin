@@ -10,7 +10,8 @@ var Game = function(){  // Game object
 Game.prototype.init = function(){ // initializes the entire game
 	var that = this;
 	
-	
+	splatSound  = $('#Splat')[0];
+	this.splatSound = splatSound;
 	
 	//this.kurmujins = [];
 	this.splotches = [];
@@ -62,8 +63,8 @@ Game.prototype.init = function(){ // initializes the entire game
   this.scene.add(light);
 	
 	this.fcns = new Object();
-	this.fcns["addKurmujin"] = that.addKurmujin;
-	this.fcns["killKurmujin"] = that.killKurmujin;
+	this.fcns["addKurmujin"] = function(size, color, position){ that.addKurmujin(size, color, position); }
+	this.fcns["killKurmujin"] = function(i) { that.killKurmujin(i); }
 	
 	this.mainMenu = new Menu(that.fcns);
 	
@@ -115,6 +116,7 @@ Game.prototype.killKurmujin = function(i){
   
   this.scene.remove(this.kurmujins[i].body);
   
+  this.splatSound.play();
 
   this.kurmujins[i] = null;
   this.kurmujins.splice(i, 1);

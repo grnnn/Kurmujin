@@ -4,10 +4,11 @@ var Shop = function(name){
 	this.options = new Array();
 	
 	this.page = 1;
+	
 }
 
 Shop.prototype.addOption = function( name, func, cost, image){ //adds an option to the shop, position is determined by array size
-	this.options.push(new Option(this.options.length+1, name, func, cost, image));
+	this.options.push(new Option(this.options.length, name, func, cost, image));
 }
 
 Shop.prototype.makeVisible = function(){ //makes the shop visible
@@ -30,5 +31,21 @@ Shop.prototype.listener = function(mouseX, mouseY, Pcash){ //check each visible 
 		if(i == this.options.length) break;
 		cash += this.options[i].listener(mouseX, mouseY, Pcash);
 	}
+	
+	
 	return cash;
+	
+	
+}
+
+Shop.prototype.nextPage = function(){ //goes to the next page in the shop
+	this.makeInvisible();
+	this.page++;
+	this.makeVisible();
+}
+
+Shop.prototype.prevPage = function(){ // goes to the previous page in the shop
+	this.makeInvisible();
+	this.page--;
+	this.makeVisible();
 }
