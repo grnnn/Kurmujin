@@ -10,6 +10,8 @@ var Splotch = function(size, color, position) {
   var particleCount = 100;
   var particles = new THREE.Geometry();
   
+  this.emitter = position;
+  
   var vertexShaderText = loadFile('classes/Kurmujin/Splotch.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Splotch.frag');
   var splotchTexture = THREE.ImageUtils.loadTexture('resources/images/splotch.png');
@@ -59,10 +61,19 @@ var Splotch = function(size, color, position) {
 };
 
 Splotch.prototype.update = function() {
-  if(this.size < this.startSize * 1.5) {
-  this.size++;
+  if(this.particleSystem.freeList.length > 0) {
+      var newIndex = this.particleSystem.freeList.pop();
+      var elem = this.particleSystem.geometry.vertices[newIndex];
+      var rand = function(x) {
+        return x * (Math.random() * 2.0 - 1.0);
+      };
+      elem.age = 0;
+      elem.x = this.emitter.x + rand(10);
+      elem.y = this.emitter.y + rand(10) + 10.0;
+      elem.z = this.emitter.z + rand(10);
+      elem.velocity.x = rand(10);
+      elem.velocity.y = 50 + rand(10);
+      elem.velocity.z = rand(10);
+      elem.active = true;
   }
-
-//  this.particleMaterial.uniforms['Size'].value = this.size;
-//  this.particleMaterial.uniforms['startSize'].value = this.startSize;
 };
