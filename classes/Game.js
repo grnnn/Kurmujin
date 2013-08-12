@@ -136,38 +136,14 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
 		}
 		if(this.mouse.x <= 1000){ // Domain of Kurmujin
-			
-			var clicked = [];
-		
-			var that = this;
-			// Figure out vector for which direction user clicked
-			var projector = new THREE.Projector();
-			var vector = new THREE.Vector3(this.mouse.kX, this.mouse.kY, 0);
-			projector.unprojectVector(vector, this.camera);
-	
-			// Subtract camera position to get relative direction from camera
-			vector.sub(this.camera.position);
-			vector.multiplyScalar(1000.0);
-	  
-			//create raycaster
-			var vec2 = new THREE.Vector3(vector.x, vector.y, vector.z);
-			vec2.normalize();
-			var raycaster = new THREE.Raycaster(this.camera.position, vec2);
 
-			//check intersections
-			for(var i = 0; i<this.kurmujins.length; i++) {
-				if(raycaster.intersectObject(this.kurmujins[i].body).length > 0) {
-					clicked.push(this.kurmujins[i]);
-				}
-			}
-			
-			if(clicked.length >= 2) {
-				this.birthKurmujin(clicked[0], clicked[1]);
-			}
 		}
 	}
 	
 	if(this.mouse.rightClicked()){
+	
+	  var clicked = [];
+	
 	  var that = this;
       // Figure out vector for which direction user clicked
       var projector = new THREE.Projector();
@@ -186,8 +162,16 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 	  //check intersections
 	  for(var i = 0; i<this.kurmujins.length; i++) {
 	    if(raycaster.intersectObject(this.kurmujins[i].body).length > 0) {
-		  this.killKurmujin(i);
+		  clicked.push(this.kurmujins[i]);
+		  this.killNumber = i;
         }
+	  }
+	  
+	  if(clicked.length >= 2) {
+		this.birthKurmujin(clicked[0], clicked[1]);
+	  }
+	  if(clicked.length == 1) {
+		this.killKurmujin(this.killNumber);;
 	  }
 	}
 	
