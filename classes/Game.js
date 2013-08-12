@@ -116,7 +116,7 @@ Game.prototype.killKurmujin = function(i){
   
   this.scene.remove(this.kurmujins[i].body);
   
-//  this.splatSound.play();
+  this.splatSound.play();
 
   this.kurmujins[i] = null;
   this.kurmujins.splice(i, 1);
