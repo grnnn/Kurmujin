@@ -1,5 +1,5 @@
 var Option = function(pos, name, func, cost, image){
-	this.pos = 170 + (pos%4) * 90; // an integer value
+	this.pos = 180 + (pos%4) * 80; // an integer value
 	this.name = name; //label of the option
 	
 	this.func = func; //the thing the option does when pressed
@@ -70,7 +70,7 @@ Option.prototype.remove = function(){ //removes the html elements from the canva
 
 Option.prototype.listener = function(mouseX, mouseY, cash){ //check the click on the current option
 	if(mouseX > 1020 && mouseX < 1180
-		&& mouseY > this.pos && mouseY < this.pos + 75){
+		&& mouseY > this.pos+10 && mouseY < this.pos + 75){
 			if(cash >= this.cost){
 				this.func();
 				return (-1 * this.cost);

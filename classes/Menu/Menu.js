@@ -6,12 +6,13 @@ var Menu = function(fcns){ // Main menu object
 	this.x = 1000;
 	this.y = 0;
 	
-	this.KurmujinShop = new Shop("Kurmujin");
+	this.PaintShop = new Shop("Paint");
 	this.ItemShop = new Shop("Item");
 	this.PatternShop = new Shop("Pattern");
 	this.HardwareShop = new Shop("Hardware");
+	this.KurmujinShop = new Shop("Kurmujin");
 	
-	this.currentShop = this.KurmujinShop;
+	this.currentShop = this.PaintShop;
 	
 	this.cash = 100;
 	this.fcns = fcns;
@@ -64,7 +65,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.items.style.font = "20px Arial";
 	this.items.style.top = 60 + 'px';
 	this.items.style.left = 1020 + 'px';
-	this.items.innerHTML = "Kurmujin";
+	this.items.innerHTML = "Paint";
 	elem.appendChild(this.items);
 	
 	this.pImage = document.createElement('img');
@@ -120,6 +121,24 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.hardware.style.left = 1020 + 'px';
 	this.hardware.innerHTML = "Hardware";
 	elem.appendChild(this.hardware);
+	
+	this.kImage = document.createElement('img');
+	this.kImage.src = "resources/images/OrangeRounded.png";
+	this.kImage.style.position = 'absolute';
+	this.kImage.style.width = 170 + "px";
+	this.kImage.style.height = 23 + "px";
+	this.kImage.style.top = 160 + "px";
+	this.kImage.style.left = 1015 + "px";
+	elem.appendChild(this.kImage);
+	
+	this.kurmujin = document.createElement('div');
+	this.kurmujin.style.color = "white";
+	this.kurmujin.style.position = 'absolute';
+	this.kurmujin.style.font = "20px Arial";
+	this.kurmujin.style.top = 160 + 'px';
+	this.kurmujin.style.left = 1020 + 'px';
+	this.kurmujin.innerHTML = "Kurmujin";
+	elem.appendChild(this.kurmujin);
 	
 	this.cCash = document.createElement('div');
 	this.cCash.style.color = "white";
@@ -185,8 +204,6 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 	this.KurmujinShop.addOption("Green", function() { that.fcns["addKurmujin"](30, new Color(0, 1, 0), {x:0, y:0}); }, 5 , "resources/images/green.png");
 	this.KurmujinShop.addOption("Blue", function() { that.fcns["addKurmujin"](30, new Color(0, 0, 1), {x:0, y:0}); }, 5, "resources/images/blue.png");
 	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
-	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
-	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
 	
 	this.ItemShop.addOption("Burger", doAThing, 20, "resources/images/burger.png");
 	this.ItemShop.addOption("Donut",  doAThing, 20, "resources/images/donut.png");
@@ -196,13 +213,13 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 	
 	this.HardwareShop.addOption("Connect", doAThing, 100, "resources/images/repeater.png");
 	
-	this.KurmujinShop.makeVisible();
+	this.PaintShop.makeVisible();
 }
 
 Menu.prototype.changeShop = function(type){ //Changes the visible shop and the background color of the menu
 	this.currentShop.makeInvisible();
 	switch(type){
-		case "Kurmujins":	this.currentShop = this.KurmujinShop;
+		case "Paint":		this.currentShop = this.PaintShop;
 							this.image.src = "resources/images/menuBackground.png";
 					 		break;
 		case "Item": 		this.currentShop = this.ItemShop;
@@ -213,6 +230,9 @@ Menu.prototype.changeShop = function(type){ //Changes the visible shop and the b
 					 		break;
 		case "Hardware": 	this.currentShop = this.HardwareShop;
 							this.image.src = "resources/images/greenBack.png";
+					 		break;
+		case "Kurmujin": 	this.currentShop = this.KurmujinShop;
+							this.image.src = "resources/images/orangeBack.png";
 					 		break;
 	}	
 	this.currentShop.makeVisible();
@@ -232,13 +252,15 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 	 * Simple change for checking which shop
 	 */
 	if(mouseX >= 1020 && mouseX <= 1185
-		&& mouseY >= 60 && mouseY <= 82.5) this.changeShop("Kurmujins");
+		&& mouseY >= 60 && mouseY <= 82.5) this.changeShop("Paint");
 	if(mouseX >= 1020 && mouseX <= 1185
 		&& mouseY > 82.5 && mouseY <= 107.5) this.changeShop("Item");
 	if(mouseX >= 1020 && mouseX <= 1185
 		&& mouseY > 107.5 && mouseY <= 132.5) this.changeShop("Pattern");
 	if(mouseX >= 1020 && mouseX <= 1185
 		&& mouseY > 132.5 && mouseY <= 157.5) this.changeShop("Hardware");
+	if(mouseX >= 1020 && mouseX <= 1185
+		&& mouseY > 157.5 && mouseY <= 182.5) this.changeShop("Kurmujin");
 		
 	/*
 	 * More complex check for each visible option
