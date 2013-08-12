@@ -31,6 +31,9 @@ var Mouse = function(canvas) {
 	var rect = canvas.getBoundingClientRect();
     that.x = (event.clientX - rect.left) / rect.width * 2 - 1;
     that.y = -(event.clientY - rect.top) / rect.height * 2 + 1;
+	
+	that.kX = (event.clientX - rect.left) / rect.width * 2 - 1;
+    that.kY = -(event.clientY - rect.top) / rect.height * 2 + 1;
 	  
     //personal modifications...Now the x and y values represent pixels
     that.x++;
