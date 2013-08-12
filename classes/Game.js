@@ -110,7 +110,7 @@ Game.prototype.addKurmujin = function(size, color, position){
 
 Game.prototype.killKurmujin = function(i){
   this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position));
-  this.scene.add(this.splotches[this.splotches.length-1].body);
+  this.scene.add(this.splotches[this.splotches.length-1].particleSystem);
   
   this.mainMenu.addCash(10);
   

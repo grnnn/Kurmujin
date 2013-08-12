@@ -7,27 +7,55 @@ var Splotch = function(size, color, position) {
   
   this.position = position;
   
-  var vertexShaderText = loadFile('classes/Kurmujin/Splotch.vert');
-  var fragmentShaderText = loadFile('classes/Kurmujin/Kurmujin.frag');
+  var particleCount = 100;
+  var particles = new THREE.Geometry();
   
-  this.myMaterial = new THREE.ShaderMaterial({
-    uniforms: { 
-      'Size': { type: 'f', value: this.Size },
-	  'startSize': { type: 'f', value: this.startSize },
-	  'Red': { type: 'f', value: this.color.red },
-	  'Green': { type: 'f', value: this.color.green },
-	  'Blue': { type: 'f', value: this.color.blue },
+  var vertexShaderText = loadFile('classes/Kurmujin/Splotch.vert');
+  var fragmentShaderText = loadFile('classes/Kurmujin/Splotch.frag');
+  var splotchTexture = THREE.ImageUtils.loadTexture('resources/images/splotch.png');
+  var particleMaterial = new THREE.ShaderMaterial({
+    attributes: {
+      'alpha': { type: 'f', value: [] },
+    },
+    uniforms: {
+	  'size': { type: 't', value: splotchTexture },
+	  'startSize': { type: 't', value: splotchTexture },
+      'tTexture': { type: 't', value: splotchTexture },
     },
     vertexShader: vertexShaderText,
-    fragmentShader: fragmentShaderText
+    fragmentShader: fragmentShaderText,
+	transparent: true
   });
   
-  //This creates the Kurmujin's body
-  this.geometryBody = new THREE.SphereGeometry(this.size, 20, 20);
-  this.body = new THREE.Mesh(this.geometryBody, this.myMaterial);
+  for(var i = 0; i < particleCount; i++) {
+    // New particle offscreen
+    var particle = new THREE.Vector3(0, 0, -10000);
+    particle.velocity = new THREE.Vector3(0, 0, 0);
+    particle.active = false;
+    particle.age = 0;
+    particles.vertices.push(particle);
+    particles.colors.push(new THREE.Color(0xff0000));
+  }
   
-  this.body.translateX(this.position.x);
-  this.body.translateY(this.position.y);
+  // Set attributes to fully opaque
+  for(var i = 0; i < particleCount; i++) {
+    // Start with particles fully opaque
+    particleMaterial.attributes.alpha.value[i] = 1.0;
+  }
+  
+  // Now create particle system itself
+  this.particleSystem = new THREE.ParticleSystem(
+    particles,
+    particleMaterial);
+	
+  // Turn on sorting, needed for normal blending
+  this.particleSystem.sortParticles = true;
+  
+  // Free list keeps track of unused particles
+  this.particleSystem.freeList = [];
+  for(var i = 0; i < particleCount; i++) {
+    this.particleSystem.freeList.push(i);
+  }
 };
 
 Splotch.prototype.update = function() {
@@ -35,6 +63,6 @@ Splotch.prototype.update = function() {
   this.size++;
   }
 
-  this.myMaterial.uniforms['Size'].value = this.size;
-  this.myMaterial.uniforms['startSize'].value = this.startSize;
+//  this.particleMaterial.uniforms['Size'].value = this.size;
+//  this.particleMaterial.uniforms['startSize'].value = this.startSize;
 };
