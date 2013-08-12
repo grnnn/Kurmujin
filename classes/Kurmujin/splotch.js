@@ -3,16 +3,14 @@ var Splotch = function(size, color, position, height) {
   
   this.size = size;
   
-  this.position = {x:position.x, y: position.y, z: height + 10};
-  
-  console.log(this.position.z);
-  
-  this.count = 0;
-  
+  this.position = {x:position.x, y: position.y, z: 10};
+
   var particleCount = size/5;
   var particles = new THREE.Geometry();
   
   this.emitter = this.position;
+  
+  this.emitters = [];
   
   var vertexShaderText = loadFile('classes/Kurmujin/Splotch.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Splotch.frag');
@@ -82,4 +80,16 @@ Splotch.prototype.update = function() {
   }
 
   this.particleSystem.geometry.verticesNeedUpdate = true;
+};
+
+Splotch.prototype.addEmitter = function(size, color, position, height) {
+  
+  var newEmitter = new Emitter(size, color, position, height)
+  
+  emitters.push(newEmitter);
+
+  for(var i = 0; i < newEmitter.count; i++) {
+    this.particleSystem.freeList.push(i);
+  }
+
 };
