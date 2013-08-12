@@ -1,16 +1,12 @@
 var Splotch = function(size, color, position) {
-  
-  this.size = size;
-  this.startSize = size;
-  
   this.color = color;
   
-  this.position = position;
+  this.position = {x:position.x, y: position.y, z: 20};
   
-  var particleCount = 100;
+  var particleCount = 200;
   var particles = new THREE.Geometry();
   
-  this.emitter = position;
+  this.emitter = this.position;
   
   var vertexShaderText = loadFile('classes/Kurmujin/Splotch.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Splotch.frag');
@@ -20,8 +16,9 @@ var Splotch = function(size, color, position) {
       'alpha': { type: 'f', value: [] },
     },
     uniforms: {
-	  'size': { type: 't', value: splotchTexture },
-	  'startSize': { type: 't', value: splotchTexture },
+	  'red' : { type: 'f', value: color.red },
+	  'green' : { type: 'f', value: color.green },
+	  'blue' : { type: 'f', value: color.blue },
       'tTexture': { type: 't', value: splotchTexture },
     },
     vertexShader: vertexShaderText,
@@ -75,5 +72,6 @@ Splotch.prototype.update = function() {
       elem.velocity.y = 50 + rand(10);
       elem.velocity.z = rand(10);
       elem.active = true;
+	  
   }
 };
