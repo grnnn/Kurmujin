@@ -1,6 +1,11 @@
-uniform float Size;
-uniform float startSize;
+attribute float alpha;
+varying float vAlpha;
 
 void main() {
-  gl_Position =  projectionMatrix * modelViewMatrix * vec4(position * (Size/startSize) * vec3(1.0, 1.0, 0.1), 1.0);
+  vAlpha = alpha;
+  float size = 40.0;
+  gl_Position = projectionMatrix *
+                modelViewMatrix *
+                vec4(position, 1.0);
+  gl_PointSize = size * projectionMatrix[0][0] / gl_Position.w * 600.0;
 }

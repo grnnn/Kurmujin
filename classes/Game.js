@@ -25,21 +25,13 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.camera.position.x = 0;
 	this.camera.position.z = 1000;
 	
+	
+	
 	//Kurmujin Testing Code, will be deleted
-
-		// this.addKurmujin(0, 0, 1);
-		// this.addKurmujin(0, 0, 1);
-		// this.addKurmujin(0, 0, 1);
-		// this.addKurmujin(0, 0, 1);
-		// this.addKurmujin(0, 0, 1);
-		// this.addKurmujin(0, 0, 1);
-		
-
 		this.addKurmujin(30, new Color(0, 0, 1), {x:0, y:0});
-		this.addKurmujin(30, new Color(0, 1, 1), {x:0, y:0});
-		this.addKurmujin(30, new Color(1, 0, 1), {x:0, y:0});
-		this.addKurmujin(30, new Color(0, 1, 0), {x:0, y:0});
-
+		this.addKurmujin(32, new Color(0, 1, 1), {x:0, y:0});
+		this.addKurmujin(50, new Color(1, 0, 1), {x:0, y:0});
+		this.addKurmujin(10, new Color(0, 1, 0), {x:0, y:0});
 	//End
 
 	
@@ -109,8 +101,8 @@ Game.prototype.addKurmujin = function(size, color, position){
 }
 
 Game.prototype.killKurmujin = function(i){
-  this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position));
-  this.scene.add(this.splotches[this.splotches.length-1].body);
+  this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position, this.splotches.length));
+  this.scene.add(this.splotches[this.splotches.length-1].particleSystem);
   
   this.mainMenu.addCash(10);
   
