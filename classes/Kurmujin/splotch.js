@@ -1,9 +1,15 @@
-var Splotch = function(size, color, position) {
+var Splotch = function(size, color, position, height) {
   this.color = color;
   
-  this.position = {x:position.x, y: position.y, z: 20};
+  this.size = size;
   
-  var particleCount = 200;
+  this.position = {x:position.x, y: position.y, z: height + 10};
+  
+  console.log(this.position.z);
+  
+  this.count = 0;
+  
+  var particleCount = size/5;
   var particles = new THREE.Geometry();
   
   this.emitter = this.position;
@@ -65,13 +71,15 @@ Splotch.prototype.update = function() {
         return x * (Math.random() * 2.0 - 1.0);
       };
       elem.age = 0;
-      elem.x = this.emitter.x + rand(10);
-      elem.y = this.emitter.y + rand(10) + 10.0;
-      elem.z = this.emitter.z + rand(10);
-      elem.velocity.x = rand(10);
-      elem.velocity.y = 50 + rand(10);
-      elem.velocity.z = rand(10);
+      elem.x = this.emitter.x + rand(this.size/1.5);
+      elem.y = this.emitter.y + rand(this.size/1.5);
+      elem.z = this.emitter.z;
+      elem.vX = rand(10);
       elem.active = true;
 	  
+	  console.log(elem.z);
+	  
   }
+
+  this.particleSystem.geometry.verticesNeedUpdate = true;
 };
