@@ -28,10 +28,10 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	//Kurmujin Testing Code, will be deleted
-		this.addKurmujin(30, new Color(0, 0, 1), {x:0, y:0});
-		this.addKurmujin(32, new Color(0, 1, 1), {x:0, y:0});
-		this.addKurmujin(50, new Color(1, 0, 1), {x:0, y:0});
-		this.addKurmujin(10, new Color(0, 1, 0), {x:0, y:0});
+		this.addKurmujin(20, new Color(0, 0, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(0, 1, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(1, 0, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(0, 1, 0), {x:0, y:0});
 	//End
 
 	
