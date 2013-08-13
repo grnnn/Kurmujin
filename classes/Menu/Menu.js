@@ -201,9 +201,14 @@ Menu.prototype.leftArrowOff = function(){ //makes the left arrow invisible
 
 Menu.prototype.initShops = function(){ //initializes what the shops contain
 	var that = this;
-	this.KurmujinShop.addOption("Green", function() { that.fcns["addKurmujin"](30, new Color(0, 1, 0), {x:0, y:0}); }, 5 , "resources/images/green.png");
-	this.KurmujinShop.addOption("Blue", function() { that.fcns["addKurmujin"](30, new Color(0, 0, 1), {x:0, y:0}); }, 5, "resources/images/blue.png");
-	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 5, "resources/images/red.png");
+	this.KurmujinShop.addOption("White", function() { that.fcns["addKurmujin"](30, new Color(1, 1, 1), {x:0, y:0}); }, 5, "resources/images/white.png");
+	this.KurmujinShop.addOption("Black", function() { that.fcns["addKurmujin"](30, new Color(0, 0, 0), {x:0, y:0}); }, 5, "resources/images/black.png");
+	this.KurmujinShop.addOption("Green", function() { that.fcns["addKurmujin"](30, new Color(0, 1, 0), {x:0, y:0}); }, 10 , "resources/images/green.png");
+	this.KurmujinShop.addOption("Blue", function() { that.fcns["addKurmujin"](30, new Color(0, 0, 1), {x:0, y:0}); }, 10, "resources/images/blue.png");
+	this.KurmujinShop.addOption("Red", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 0), {x:0, y:0}); }, 10, "resources/images/red.png");
+	this.KurmujinShop.addOption("Yellow", function() { that.fcns["addKurmujin"](30, new Color(1, 1, 0), {x:0, y:0}); }, 15 , "resources/images/yellow.png");
+	this.KurmujinShop.addOption("Cyan", function() { that.fcns["addKurmujin"](30, new Color(0, 1, 1), {x:0, y:0}); }, 15, "resources/images/cyan.png");
+	this.KurmujinShop.addOption("Magenta", function() { that.fcns["addKurmujin"](30, new Color(1, 0, 1), {x:0, y:0}); }, 15, "resources/images/magenta.png");
 	
 	this.ItemShop.addOption("Burger", doAThing, 20, "resources/images/burger.png");
 	this.ItemShop.addOption("Donut",  doAThing, 20, "resources/images/donut.png");

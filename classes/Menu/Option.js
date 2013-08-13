@@ -78,6 +78,6 @@ Option.prototype.listener = function(mouseX, mouseY, cash){ //check the click on
 			else{
 				alert("You don't has enough money :(");
 			}
-		}
-		return 0;
+	}
+	return 0;
 }
