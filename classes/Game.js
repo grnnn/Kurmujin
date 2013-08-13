@@ -28,10 +28,10 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	//Kurmujin Testing Code, will be deleted
-		this.addKurmujin(30, new Color(0, 0, 1), {x:0, y:0});
-		this.addKurmujin(32, new Color(0, 1, 1), {x:0, y:0});
-		this.addKurmujin(50, new Color(1, 0, 1), {x:0, y:0});
-		this.addKurmujin(10, new Color(0, 1, 0), {x:0, y:0});
+		this.addKurmujin(20, new Color(0, 0, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(0, 1, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(1, 0, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(0, 1, 0), {x:0, y:0});
 	//End
 
 	
@@ -100,6 +100,19 @@ Game.prototype.addKurmujin = function(size, color, position){
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
+Game.prototype.birthKurmujin = function(parent1, parent2){
+  
+  var size = (parent1.size + parent2.size)/2;
+  var color = new Color((parent1.color.red + parent2.color.red)/2,
+						(parent1.color.green + parent2.color.green)/2,
+						(parent1.color.blue + parent2.color.blue)/2);
+  var position = {x: (parent1.position.x + parent2.position.x)/2,
+				  y: (parent1.position.y + parent2.position.y)/2};
+  
+  this.kurmujins.push(new Kurmujin(size, color, position));
+  this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
+}
+
 Game.prototype.killKurmujin = function(i){
   this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position, this.splotches.length));
   this.scene.add(this.splotches[this.splotches.length-1].particleSystem);
@@ -123,11 +136,13 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
 		}
 		if(this.mouse.x <= 1000){ // Domain of Kurmujin
-			
+
 		}
 	}
 	
 	if(this.mouse.rightClicked()){
+	
+	  var clicked = [];
 	
 	  var that = this;
       // Figure out vector for which direction user clicked
@@ -147,8 +162,16 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 	  //check intersections
 	  for(var i = 0; i<this.kurmujins.length; i++) {
 	    if(raycaster.intersectObject(this.kurmujins[i].body).length > 0) {
-		  this.killKurmujin(i);
+		  clicked.push(this.kurmujins[i]);
+		  this.killNumber = i;
         }
+	  }
+	  
+	  if(clicked.length >= 2) {
+		this.birthKurmujin(clicked[0], clicked[1]);
+	  }
+	  if(clicked.length == 1) {
+		this.killKurmujin(this.killNumber);;
 	  }
 	}
 	
