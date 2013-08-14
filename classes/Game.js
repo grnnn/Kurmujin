@@ -7,6 +7,8 @@ var Game = function(){  // Game object
 	
 	this.clicked = new Array();
 	
+	this.feedBack = new Array();
+	
 }
 
 Game.prototype.init = function(){ // initializes the entire game
@@ -14,6 +16,9 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	splatSound  = $('#Splat')[0];
 	this.splatSound = splatSound;
+	
+	dingSound  = $('#Ding')[0];
+	this.dingSound = dingSound;
 	
 	//this.kurmujins = [];
 	this.splotch = new Splotch();
@@ -31,10 +36,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	//Kurmujin Testing Code, will be deleted
-		this.addKurmujin(20, new Color(0, 0, 1), {x:0, y:0});
-		this.addKurmujin(20, new Color(0, 1, 1), {x:0, y:0});
-		this.addKurmujin(20, new Color(1, 0, 1), {x:0, y:0});
-		this.addKurmujin(20, new Color(0, 1, 0), {x:0, y:0});
+		this.addKurmujin(20, new Color(1, 1, 1), {x:0, y:0});
 	//End
 
 	
@@ -62,8 +64,10 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.fcns["killKurmujin"] = function(i) { that.killKurmujin(i); }
 	this.fcns["raycasterOn"] = function(){ that.raycasterOn(); }
 	this.fcns["raycasterOff"] = function(){ that.raycasterOff(); }
+	this.fcns["birthKurmujin"] = function(){ that.birthKurmujin(); }
+	this.fcns["checkAmount"] = function(amount){ return that.checkAmount(amount); }
 	
-	this.mainMenu = new Menu(that.fcns, that.clicked);
+	this.mainMenu = new Menu(that.fcns);
 	
 	// Container div
   	this.container = document.getElementById('gameArea');
@@ -118,23 +122,30 @@ Game.prototype.birthKurmujin = function(parent1, parent2){
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
-<<<<<<< HEAD
-Game.prototype.killKurmujin = function(kurmujin){
-  this.splotches.push(new Splotch(kurmujin.size, kurmujin.color, kurmujin.position, this.splotches.length));
-  this.scene.add(this.splotches[this.splotches.length-1].particleSystem);
-=======
+
 Game.prototype.killKurmujin = function(i){
   this.splotch.addParticles(5, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
->>>>>>> 44288a9960458d2e9e02b5521fea97789213f9d1
   
   this.mainMenu.addCash(10);
   
-  this.scene.remove(kurmujin.body);
+  this.scene.remove(this.kurmujins[i].body);
+  
+  for(var j = 0; j < this.kurmujins[i].toSignal.length; j++){
+  	this.killKurmujin(j);
+  	if(j < i) i--;
+  }
   
   this.splatSound.play();
-
-  kurmujin = null;
-  this.kurmujins.splice(this.kurmujins.indexOf(kurmujin), 1);
+  
+  var feedBackText = new text2D("$" + 10, Math.random()*1000, (this.mouse.x + 1)*this.canvas.width/2, (2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
+  feedBackText.timer = 100;
+  this.feedBack.push(feedBackText);
+ 
+  var elem = document.getElementById('gameArea');
+  elem.appendChild(feedBackText.stuff);
+  
+  this.kurmujins[i] = null;
+  this.kurmujins.splice(i, 1);
 }
 
 Game.prototype.mainInput = function(){ //Handling the main input of the game
@@ -142,9 +153,13 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 	if(this.mouse.leftClicked()){
 		console.log(this.mouse.x + ", " + this.mouse.y);
 		
+		var soundBool = true;
+		
 		if(this.mouse.x > 1000){ // Domain of Menu
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
+			soundBool = false;
 		}
+		
 		if(!this.mouse.noRaycasting){
 	
 	  		var that = this;
@@ -168,7 +183,12 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 				  this.clicked.push(this.kurmujins[i]);
         		}
 	  		}
+	  		
+	  		this.mainMenu.clicked = this.clicked;
+	  		if(soundBool)this.dingSound.play();
 		}
+		
+		
 	}
 	
 	if(this.mouse.rightClicked()){
@@ -198,11 +218,8 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
         }
 	  }
 	  
-	  if(clicked.length >= 2) {
-		this.birthKurmujin(clicked[0], clicked[1]);
-	  }
 	  if(clicked.length == 1) {
-		this.killKurmujin(clicked[0]);;
+		this.killKurmujin(this.killNumber);;
 	  }
 	}
 	
@@ -219,15 +236,38 @@ Game.prototype.raycasterOff = function(){ //turns off the raycasting, also reset
 	this.clicked = new Array();
 }
 
+Game.prototype.checkAmount = function(amount){
+	if(this.kurmujins.length < amount){
+		if(this.kurmujins.length == 1) {alert("You can't do that with only 1 kurmujin");}
+		else {alert("You can't do that with " + this.kurmujins.length + " kurmujins");}
+		
+		return false;
+	}
+	return true;
+}
+
+Game.prototype.feedbackChecker = function(){
+	for(var i=0;i<this.feedBack.length;i++){
+		this.feedBack[i].timer--;
+		if(this.feedBack[i].timer == 0){
+			var div = document.getElementById(this.feedBack[i].stuff.id);
+			div.parentNode.removeChild(div);
+			this.feedBack[i] = null;
+			this.feedBack.splice(i, 1);
+		}
+	}
+} 
+
 Game.prototype.render = function(t){ // called every frame, main game loop
 	
     for(var i = 0; i<this.kurmujins.length; i++) {
 	  this.kurmujins[i].update();
 	};
 	
+	
 	this.mainMenu.update();
 
-	//this.camera.lookAt(new THREE.Vector3(this.camera.position.x, this.camera.position.y, this.camera.position.z - 200));
+	this.feedbackChecker();
 	
 	this.camera.lookAt(this.scene.position);
 

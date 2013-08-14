@@ -5,6 +5,7 @@ var Shop = function(name){
 	
 	this.page = 1;
 	
+	
 }
 
 Shop.prototype.addOption = function( name, func, cost, image){ //adds an option to the shop, position is determined by array size
@@ -25,15 +26,13 @@ Shop.prototype.makeInvisible = function(){ //makes the shop invisible
 	}
 }
 
-Shop.prototype.listener = function(mouseX, mouseY, Pcash){ //check each visible option
-	var cash = 0;
+Shop.prototype.listener = function(mouseX, mouseY){ //check each visible option
 	for(var i = 4*(this.page - 1); i < 4*this.page; i++){
 		if(i == this.options.length) break;
-		cash += this.options[i].listener(mouseX, mouseY, Pcash);
+			this.options[i].listener(mouseX, mouseY);
 	}
 	
 	
-	return cash;
 	
 	
 }

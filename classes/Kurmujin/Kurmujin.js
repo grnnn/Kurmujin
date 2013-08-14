@@ -9,6 +9,8 @@ var Kurmujin = function(size, color, position) {
   
   this.position = position;
   
+  this.toSignal = new Array();
+  
   var vertexShaderText = loadFile('classes/Kurmujin/Kurmujin.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Kurmujin.frag');
   

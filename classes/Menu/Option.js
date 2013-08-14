@@ -68,16 +68,9 @@ Option.prototype.remove = function(){ //removes the html elements from the canva
 	div.parentNode.removeChild(div);
 }
 
-Option.prototype.listener = function(mouseX, mouseY, cash){ //check the click on the current option
+Option.prototype.listener = function(mouseX, mouseY){ //check the click on the current option
 	if(mouseX > 1020 && mouseX < 1180
 		&& mouseY > this.pos+10 && mouseY < this.pos + 75){
-			if(cash >= this.cost){
-				this.func();
-				return (-1 * this.cost);
-			}
-			else{
-				alert("You don't has enough money :(");
-			}
+			this.func();	
 	}
-	return 0;
 }
