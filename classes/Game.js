@@ -5,6 +5,8 @@ var Game = function(){  // Game object
 	
 	this.kurmujins = new Array();
 	
+	this.clicked = new Array();
+	
 }
 
 Game.prototype.init = function(){ // initializes the entire game
@@ -57,8 +59,10 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.fcns = new Object();
 	this.fcns["addKurmujin"] = function(size, color, position){ that.addKurmujin(size, color, position); }
 	this.fcns["killKurmujin"] = function(i) { that.killKurmujin(i); }
+	this.fcns["raycasterOn"] = function(){ that.raycasterOn(); }
+	this.fcns["raycasterOff"] = function(){ that.raycasterOff(); }
 	
-	this.mainMenu = new Menu(that.fcns);
+	this.mainMenu = new Menu(that.fcns, that.clicked);
 	
 	// Container div
   	this.container = document.getElementById('gameArea');
@@ -113,18 +117,18 @@ Game.prototype.birthKurmujin = function(parent1, parent2){
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
-Game.prototype.killKurmujin = function(i){
-  this.splotches.push(new Splotch(this.kurmujins[i].size, this.kurmujins[i].color, this.kurmujins[i].position, this.splotches.length));
+Game.prototype.killKurmujin = function(kurmujin){
+  this.splotches.push(new Splotch(kurmujin.size, kurmujin.color, kurmujin.position, this.splotches.length));
   this.scene.add(this.splotches[this.splotches.length-1].particleSystem);
   
   this.mainMenu.addCash(10);
   
-  this.scene.remove(this.kurmujins[i].body);
+  this.scene.remove(kurmujin.body);
   
   this.splatSound.play();
 
-  this.kurmujins[i] = null;
-  this.kurmujins.splice(i, 1);
+  kurmujin = null;
+  this.kurmujins.splice(this.kurmujins.indexOf(kurmujin), 1);
 }
 
 Game.prototype.mainInput = function(){ //Handling the main input of the game
@@ -135,8 +139,29 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 		if(this.mouse.x > 1000){ // Domain of Menu
 			this.mainMenu.listener(this.mouse.x, this.mouse.y);
 		}
-		if(this.mouse.x <= 1000){ // Domain of Kurmujin
-
+		if(!this.mouse.noRaycasting){
+	
+	  		var that = this;
+     		// Figure out vector for which direction user clicked
+     		var projector = new THREE.Projector();
+      		var vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0);
+      		projector.unprojectVector(vector, this.camera);
+	  	
+   			// Subtract camera position to get relative direction from camera
+      		vector.sub(this.camera.position);
+      		vector.multiplyScalar(1000.0);
+	  
+	  		//create raycaster
+	  		var vec2 = new THREE.Vector3(vector.x, vector.y, vector.z);
+      		vec2.normalize();
+      		var raycaster = new THREE.Raycaster(this.camera.position, vec2);
+      		
+      		//check intersections
+	  		for(var i = 0; i<this.kurmujins.length; i++) {
+	    		if(raycaster.intersectObject(this.kurmujins[i].body).length > 0) {
+				  this.clicked.push(this.kurmujins[i]);
+        		}
+	  		}
 		}
 	}
 	
@@ -171,11 +196,21 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 		this.birthKurmujin(clicked[0], clicked[1]);
 	  }
 	  if(clicked.length == 1) {
-		this.killKurmujin(this.killNumber);;
+		this.killKurmujin(clicked[0]);;
 	  }
 	}
 	
 	
+}
+
+Game.prototype.raycasterOn = function(){ //turns on the raycasting
+	this.mouse.noRaycasting = false;
+}
+
+Game.prototype.raycasterOff = function(){ //turns off the raycasting, also resets stack of clicked on kurmujins
+	this.mouse.noRaycasting = true;
+	this.clicked = null;
+	this.clicked = new Array();
 }
 
 Game.prototype.render = function(t){ // called every frame, main game loop
@@ -198,3 +233,4 @@ Game.prototype.render = function(t){ // called every frame, main game loop
 	
 	this.mainInput();
 }
+

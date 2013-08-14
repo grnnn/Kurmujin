@@ -26,6 +26,8 @@ var Mouse = function(canvas) {
   this.hasLeftClicked = false;
   this.hasRightClicked = false;
   
+  this.noRaycasting = true;
+  
   canvas.addEventListener('mousedown', function(event) { //'mousemove' instead of mousedown for updating mouse.x and mouse.y
     if(event.which == 1) {
 	var rect = canvas.getBoundingClientRect();
@@ -36,11 +38,14 @@ var Mouse = function(canvas) {
     that.kY = -(event.clientY - rect.top) / rect.height * 2 + 1;
 	  
     //personal modifications...Now the x and y values represent pixels
-    that.x++;
-    that.y++;
-    that.y = 2 - that.y;
-    that.x = that.x*canvas.width/2;
-    that.y = that.y*canvas.height/2;
+    if(that.noRaycasting){
+    	that.x++;
+    	that.y++;
+    	that.y = 2 - that.y;
+    	that.x = that.x*canvas.width/2;
+    	that.y = that.y*canvas.height/2;
+    }
+    
     
     that.hasLeftClicked = true;
 	}
