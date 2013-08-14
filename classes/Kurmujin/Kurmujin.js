@@ -69,10 +69,17 @@ Kurmujin.prototype.update = function() {
 
   this.myMaterial.uniforms['Size'].value = this.size;
   this.myMaterial.uniforms['startSize'].value = this.startSize;
+
   
   //cough cough, excuse me you forgot to add these...
   this.myMaterial.uniforms['Red'].value = this.color.red;
   this.myMaterial.uniforms['Green'].value = this.color.green;
   this.myMaterial.uniforms['Blue'].value = this.color.blue;
+
 };
+
+Kurmujin.prototype.getPrice = function() {
+  this.price = (this.size / 10);
+  return this.price;
+}
 
