@@ -26,6 +26,9 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.arrowHandler(); // to the knee
 	
+	this.fTutorial = false;
+	this.pTutorial = false;
+	
 }
 
 
@@ -210,57 +213,85 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 	this.PaintShop.addOption("Black", function() { if( that.fcns["checkAmount"](1) && that.cashCheck(5)){
 														that.fcns["raycasterOn"]();
 														that.selectionFunc = function(){ that.color( new Color(0, 0, 0) ); }; 
+												   }
+												   if(that.pTutorial == false) {
 														alert("Click on the kurmujin you wish to modify");
+														that.pTutorial = true;
 												   }
 												 }, 5, "resources/images/black.png");
 	this.PaintShop.addOption("Green", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(10)){
 													that.fcns["raycasterOn"](); 
 													that.selectionFunc = function(){ that.color( new Color(0, 1, 0) ); }; 
-													alert("Click on the kurmujin you wish to modify");
+												   }
+												   if(that.pTutorial == false) {
+														alert("Click on the kurmujin you wish to modify");
+														that.pTutorial = true;
 												   }
 												 }, 10 , "resources/images/green.png");
 	this.PaintShop.addOption("Blue", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(10)){
 													that.fcns["raycasterOn"](); 
 													that.selectionFunc = function(){ that.color( new Color(0, 0, 1) ); }; 
-													alert("Click on the kurmujin you wish to modify");
-												  }
+												   }
+												   if(that.pTutorial == false) {
+														alert("Click on the kurmujin you wish to modify");
+														that.pTutorial = true;
+												   }
 												}, 10, "resources/images/blue.png");
 	this.PaintShop.addOption("Red", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(10)){
 													that.fcns["raycasterOn"](); 
 													that.selectionFunc = function(){ that.color( new Color(1, 0, 0) ); }; 
-													alert("Click on the kurmujin you wish to modify");
-												 }
+												   }
+												   if(that.pTutorial == false) {
+														alert("Click on the kurmujin you wish to modify");
+														that.pTutorial = true;
+												   }
 											   }, 10, "resources/images/red.png");
 	this.PaintShop.addOption("Yellow", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(15)){
 													that.fcns["raycasterOn"](); 
 													that.selectionFunc = function(){ that.color( new Color(1, 1, 0) ); };
-													alert("Click on the kurmujin you wish to modify");
-													}
+												   }
+												   if(that.pTutorial == false) {
+														alert("Click on the kurmujin you wish to modify");
+														that.pTutorial = true;
+												   }
 												 }, 15 , "resources/images/yellow.png");
 	this.PaintShop.addOption("Cyan", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(15)){
 													that.fcns["raycasterOn"](); 
 													that.selectionFunc = function(){ that.color( new Color(0, 1, 1) ); }; 
 													alert("Click on the kurmujin you wish to modify");
-												  }
+												   }
+												   if(that.pTutorial == false) {
+														alert("Click on the kurmujin you wish to modify");
+														that.pTutorial = true;
+												   }
 												 }, 15, "resources/images/cyan.png");
 	this.PaintShop.addOption("Magenta", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(15)){
 														that.fcns["raycasterOn"](); 
 														that.selectionFunc = function(){ that.color( new Color(1, 0, 1) ); }; 
+												   }
+												   if(that.pTutorial == false) {
 														alert("Click on the kurmujin you wish to modify");
-													 }
+														that.pTutorial = true;
+												   }
 												   }, 15, "resources/images/magenta.png");
 
 	
 	this.ItemShop.addOption("Donut",function() { if(that.fcns["checkAmount"](1) && that.cashCheck(10)){
 													that.fcns["raycasterOn"]();
 													that.selectionFunc = function(){ that.feed(5); };
+												 }
+												 if(that.fTutorial == false) {
 													alert("Click on the kurmujin you wish to feed");
+													that.fTutorial = true;
 												 }
 											   }, 10, "resources/images/donut.png");
 	this.ItemShop.addOption("Burger",  function() { if(that.fcns["checkAmount"](1) && that.cashCheck(15)){
 														that.fcns["raycasterOn"]();
 														that.selectionFunc = function(){ that.feed(10); };
-													 	alert("Click on the kurmujin you wish to feed");
+													}
+													if(that.fTutorial == false) {
+														alert("Click on the kurmujin you wish to feed");
+														that.fTutorial = true;
 													}
 												  }, 15, "resources/images/burger.png");
 	

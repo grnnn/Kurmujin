@@ -154,8 +154,6 @@ Game.prototype.killKurmujin = function(i){
 Game.prototype.mainInput = function(){ //Handling the main input of the game
 	
 	if(this.mouse.leftClicked()){
-		console.log(this.mouse.x + ", " + this.mouse.y);
-		
 		var soundBool = true;
 		
 		if(this.mouse.x > 1000){ // Domain of Menu

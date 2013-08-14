@@ -79,9 +79,7 @@ Kurmujin.prototype.update = function() {
 
 Kurmujin.prototype.getPrice = function() {
   this.price = this.size/5;
-  
-  console.log(this.price);
-  
+
   return this.price;
 }
 
