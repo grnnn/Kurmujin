@@ -22,7 +22,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.renderer.setClearColor(0xEEEEEE, 1.0);
     this.renderer.clear();
       		
-	this.camera.position.y = -100;
+	this.camera.position.y = 0;
 	this.camera.position.x = 0;
 	this.camera.position.z = 1000;
 	
