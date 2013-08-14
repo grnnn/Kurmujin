@@ -64,7 +64,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.fcns["killKurmujin"] = function(i) { that.killKurmujin(i); }
 	this.fcns["raycasterOn"] = function(){ that.raycasterOn(); }
 	this.fcns["raycasterOff"] = function(){ that.raycasterOff(); }
-	this.fcns["birthKurmujin"] = function(){ that.birthKurmujin(); }
+	this.fcns["birthKurmujin"] = function(p1, p2){ that.birthKurmujin(p1, p2); }
 	this.fcns["checkAmount"] = function(amount){ return that.checkAmount(amount); }
 	
 	this.mainMenu = new Menu(that.fcns);
