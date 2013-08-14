@@ -3,6 +3,8 @@ var Kurmujin = function(size, color, position) {
   this.size = size;
   this.startSize = size;
   
+  this.count = this.size / 10;
+  
   this.color = color;
   
   this.position = position;

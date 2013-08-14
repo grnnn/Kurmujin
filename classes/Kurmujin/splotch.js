@@ -1,28 +1,18 @@
-var Splotch = function(size, color, position, height) {
-  this.color = color;
-  
-  this.size = size;
-  
-  this.position = {x:position.x, y: position.y, z: 10};
-
-  var particleCount = size/5;
+var Splotch = function() {
   var particles = new THREE.Geometry();
-  
-  this.emitter = this.position;
-  
-  this.emitters = [];
   
   var vertexShaderText = loadFile('classes/Kurmujin/Splotch.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Splotch.frag');
+  
   var splotchTexture = THREE.ImageUtils.loadTexture('resources/images/splotch.png');
-  var particleMaterial = new THREE.ShaderMaterial({
+  
+  this.particleMaterial = new THREE.ShaderMaterial({
     attributes: {
-      'alpha': { type: 'f', value: [] },
+      'red': { type: 'f', value: [] },
+	  'green': { type: 'f', value: [] },
+	  'blue': { type: 'f', value: [] },
     },
     uniforms: {
-	  'red' : { type: 'f', value: color.red },
-	  'green' : { type: 'f', value: color.green },
-	  'blue' : { type: 'f', value: color.blue },
       'tTexture': { type: 't', value: splotchTexture },
     },
     vertexShader: vertexShaderText,
@@ -30,66 +20,47 @@ var Splotch = function(size, color, position, height) {
 	transparent: true
   });
   
-  for(var i = 0; i < particleCount; i++) {
-    // New particle offscreen
-    var particle = new THREE.Vector3(0, 0, -10000);
-    particle.velocity = new THREE.Vector3(0, 0, 0);
-    particle.active = false;
-    particle.age = 0;
-    particles.vertices.push(particle);
-    particles.colors.push(new THREE.Color(0xff0000));
-  }
-  
-  // Set attributes to fully opaque
-  for(var i = 0; i < particleCount; i++) {
-    // Start with particles fully opaque
-    particleMaterial.attributes.alpha.value[i] = 1.0;
-  }
-  
   // Now create particle system itself
   this.particleSystem = new THREE.ParticleSystem(
     particles,
-    particleMaterial);
+    this.particleMaterial);
 	
   // Turn on sorting, needed for normal blending
   this.particleSystem.sortParticles = true;
   
-  // Free list keeps track of unused particles
-  this.particleSystem.freeList = [];
-  for(var i = 0; i < particleCount; i++) {
-    this.particleSystem.freeList.push(i);
+  for(var i = 0; i<1000; i++) {
+    this.particleSystem.geometry.vertices.push(new THREE.Vector3(0, 0, -100));
+	this.particleMaterial.attributes.red.value.push(0);
+	this.particleMaterial.attributes.green.value.push(0);
+	this.particleMaterial.attributes.blue.value.push(0);
   }
+  
+  this.bigCount = 0;
 };
 
-Splotch.prototype.update = function() {
-  if(this.particleSystem.freeList.length > 0) {
-      var newIndex = this.particleSystem.freeList.pop();
-      var elem = this.particleSystem.geometry.vertices[newIndex];
-      var rand = function(x) {
-        return x * (Math.random() * 2.0 - 1.0);
-      };
-      elem.age = 0;
-      elem.x = this.emitter.x + rand(this.size/1.5);
-      elem.y = this.emitter.y + rand(this.size/1.5);
-      elem.z = this.emitter.z;
-      elem.vX = rand(10);
-      elem.active = true;
-	  
-	  console.log(elem.z);
-	  
+Splotch.prototype.addParticles = function(count, color, loc, size) {
+  
+  console.log('count '+ count);
+  console.log('Bcount '+ this.bigCount);
+  
+  for(var i = 0; i<count; i++) {
+    var particle = this.particleSystem.geometry.vertices[this.bigCount + i];
+	var rand = function(x) {
+	  return x * (Math.random() * 2.0 - 1.0);
+	};
+	particle.x = loc.x + rand(size/1.5);
+	particle.y = loc.y + rand(size/1.5);
+	particle.z = 5;
   }
+  
+  for(var i = 0; i < count; i++) {
+    // Set the Particle Colors
+    this.particleMaterial.attributes.red.value[this.bigCount + i] = color.red;
+	this.particleMaterial.attributes.green.value[this.bigCount + i] = color.green;
+	this.particleMaterial.attributes.blue.value[this.bigCount + i] = color.blue;
+  }
+  
+  this.bigCount += count;
 
   this.particleSystem.geometry.verticesNeedUpdate = true;
-};
-
-Splotch.prototype.addEmitter = function(size, color, position, height) {
-  
-  var newEmitter = new Emitter(size, color, position, height)
-  
-  emitters.push(newEmitter);
-
-  for(var i = 0; i < newEmitter.count; i++) {
-    this.particleSystem.freeList.push(i);
-  }
-
 };
