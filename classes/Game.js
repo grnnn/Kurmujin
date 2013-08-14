@@ -124,9 +124,9 @@ Game.prototype.birthKurmujin = function(parent1, parent2){
 
 
 Game.prototype.killKurmujin = function(i){
-  this.splotch.addParticles(5, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
+  this.splotch.addParticles(this.kurmujins[i].sCount, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
   
-  this.mainMenu.addCash(10);
+  this.mainMenu.addCash(this.kurmujins[i].getPrice());
   
   this.scene.remove(this.kurmujins[i].body);
   
@@ -137,7 +137,10 @@ Game.prototype.killKurmujin = function(i){
   
   this.splatSound.play();
   
-  var feedBackText = new text2D("$" + 10, Math.random()*1000, (this.mouse.x + 1)*this.canvas.width/2, (2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
+  var feedBackText = new text2D("$" + this.kurmujins[i].getPrice(), 
+								Math.random()*1000, 
+								(this.mouse.x + 1)*this.canvas.width/2, 
+								(2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
   feedBackText.timer = 100;
   this.feedBack.push(feedBackText);
  

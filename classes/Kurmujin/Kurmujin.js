@@ -3,7 +3,7 @@ var Kurmujin = function(size, color, position) {
   this.size = size;
   this.startSize = size;
   
-  this.count = this.size / 10;
+  this.sCount = this.size / 5;
   
   this.color = color;
   
@@ -79,7 +79,10 @@ Kurmujin.prototype.update = function() {
 };
 
 Kurmujin.prototype.getPrice = function() {
-  this.price += this.size/5;
+  this.price = this.size/5;
+  
+  console.log(this.price);
+  
   return this.price;
 }
 
