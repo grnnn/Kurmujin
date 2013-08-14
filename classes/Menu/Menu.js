@@ -14,7 +14,7 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.currentShop = this.PaintShop;
 	
-	this.cash = 100;
+	this.cash = 1000;
 	this.fcns = fcns;
 	this.clicked = new Array();
 	
@@ -28,6 +28,7 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.fTutorial = false;
 	this.pTutorial = false;
+	this.bTutorial = false;
 	
 }
 
@@ -309,7 +310,10 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 	this.KurmujinShop.addOption("Breed", function() { if( that.fcns["checkAmount"](2) && that.cashCheck(50) ){
 														 that.fcns["raycasterOn"]();
 														 that.selectionFunc = function(){ that.breed(); };
-														 alert("Click on 2 kurmujins you wish to breed\nWait for 2 dings");
+													  }
+													  if(that.bTutorial == false) {
+														alert("Click on 2 kurmujins you wish to breed\nWait for 2 dings");
+														that.bTutorial = true;
 													  }
 													}, 50, "resources/images/heart.png");	
 	this.KurmujinShop.addOption("Register", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(30)){
