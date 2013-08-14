@@ -16,8 +16,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.splatSound = splatSound;
 	
 	//this.kurmujins = [];
-	this.splotch = new Splotch();
-	this.scene.add(this.splotch.particleSystem);
+	this.splotches = [];
 	
 	this.renderer.setSize(1200, 600);
     document.body.appendChild(this.renderer.domElement);			
@@ -118,14 +117,9 @@ Game.prototype.birthKurmujin = function(parent1, parent2){
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
-<<<<<<< HEAD
 Game.prototype.killKurmujin = function(kurmujin){
   this.splotches.push(new Splotch(kurmujin.size, kurmujin.color, kurmujin.position, this.splotches.length));
   this.scene.add(this.splotches[this.splotches.length-1].particleSystem);
-=======
-Game.prototype.killKurmujin = function(i){
-  this.splotch.addParticles(5, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
->>>>>>> 44288a9960458d2e9e02b5521fea97789213f9d1
   
   this.mainMenu.addCash(10);
   
@@ -223,6 +217,10 @@ Game.prototype.render = function(t){ // called every frame, main game loop
 	
     for(var i = 0; i<this.kurmujins.length; i++) {
 	  this.kurmujins[i].update();
+	};
+	
+	for(var i = 0; i<this.splotches.length; i++) {
+	  this.splotches[i].update();
 	};
 	
 	this.mainMenu.update();
