@@ -39,17 +39,13 @@ var Splotch = function() {
 };
 
 Splotch.prototype.addParticles = function(count, color, loc, size) {
-  
-  console.log('count '+ count);
-  console.log('Bcount '+ this.bigCount);
-  
   for(var i = 0; i<count; i++) {
     var particle = this.particleSystem.geometry.vertices[this.bigCount + i];
 	var rand = function(x) {
 	  return x * (Math.random() * 2.0 - 1.0);
 	};
-	particle.x = loc.x + rand(size/1.5);
-	particle.y = loc.y + rand(size/1.5);
+	particle.x = loc.x + rand(size);
+	particle.y = loc.y + rand(size);
 	particle.z = 5;
   }
   
