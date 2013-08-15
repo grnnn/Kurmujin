@@ -10,7 +10,7 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.currentShop = this.PaintShop;
 	
-	this.cash = 50;
+	this.cash = 200;
 
 	this.fcns = fcns;
 	this.clicked = new Array();
