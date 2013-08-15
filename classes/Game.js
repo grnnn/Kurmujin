@@ -126,8 +126,6 @@ Game.prototype.birthKurmujin = function(parent1, parent2){ //breeds 2 kurmujins 
   
 }
 
-
-
 Game.prototype.killKurmujin = function(i){// kills a kurmujin, pops it, and puts up feedback
   this.splotch.addParticles(this.kurmujins[i].sCount, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
   
