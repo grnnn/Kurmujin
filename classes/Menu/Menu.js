@@ -154,7 +154,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.cCash.style.font = "25px Arial";
 	this.cCash.style.top = 570 + 'px';
 	this.cCash.style.left = 1020 + 'px';
-	this.cCash.innerHTML = "$" + this.cash;
+	this.cCash.innerHTML = "$" + Math.round(this.cash);
 	elem.appendChild(this.cCash);
 }
 
@@ -323,7 +323,7 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 													}
 												  }, 15, "resources/images/burger.png");
 	
-	this.PatternShop.addOption("N/A", doAThing, 50, "resources/images/spiral.png");
+	//this.PatternShop.addOption("N/A", doAThing, 50, "resources/images/spiral.png");
 	//this.PatternShop.addOption("Star", doAThing, 50, "resources/images/star.png");
 	
 	this.HardwareShop.addOption("Connect", function() { if( that.fcns["checkAmount"](2) && that.cashCheck(100) ){
@@ -333,7 +333,7 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 													    }
 													  }, 100, "resources/images/repeater.png");
 	
-	this.KurmujinShop.addOption("White", function() {if(that.cashCheck(2)) that.fcns["addKurmujin"](20, new Color(1,1,1), {x:0, y:0}, 4); } , 2, "resources/images/white.png");
+	this.KurmujinShop.addOption("White", function() {if(that.cashCheck(6)) that.fcns["addKurmujin"](20, new Color(1,1,1), {x:0, y:0}, 4); } , 6, "resources/images/white.png");
 	this.KurmujinShop.addOption("Breed", function() { if( that.fcns["checkAmount"](2) && that.cashCheck(50) ){
 														 that.fcns["raycasterOn"]();
 														 that.selectionFunc = function(){ that.breed(); };

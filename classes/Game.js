@@ -253,7 +253,7 @@ Game.prototype.checkAmount = function(amount){ //checks to see if there's a spec
 	return true;
 }
 
-Game.prototype.snapShot = function(kurmujin){
+Game.prototype.snapShot = function(kurmujin){ //non-functional attempt at taking a snapshot of a kurmujin
 	var cam = new THREE.PerspectiveCamera(45, 1.0/1.0, 1, 10000);
 	this.scene.add(cam);
 	
