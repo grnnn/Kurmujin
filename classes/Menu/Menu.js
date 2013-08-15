@@ -1,6 +1,4 @@
 var Menu = function(fcns){ // Main menu object
-	
-	
 	this.width = 200;
 	this.height = 600;
 	this.x = 1000;
@@ -8,13 +6,10 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.PaintShop = new Shop("Paint");
 	this.ItemShop = new Shop("Item");
-	this.PatternShop = new Shop("Pattern");
-	this.HardwareShop = new Shop("Hardware");
 	this.KurmujinShop = new Shop("Kurmujin");
 	
 	this.currentShop = this.PaintShop;
 	
-
 	this.cash = 50;
 
 	this.fcns = fcns;
@@ -31,7 +26,6 @@ var Menu = function(fcns){ // Main menu object
 	this.fTutorial = false;
 	this.pTutorial = false;
 	this.bTutorial = false;
-	
 }
 
 
@@ -93,49 +87,13 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.paint.style.left = 1020 + 'px';
 	this.paint.innerHTML = "Item";
 	elem.appendChild(this.paint);
-	
-	this.paImage = document.createElement('img');
-	this.paImage.src = "resources/images/yellowRounded.png";
-	this.paImage.style.position = 'absolute';
-	this.paImage.style.width = 170 + "px";
-	this.paImage.style.height = 23 + "px";
-	this.paImage.style.top = 110 + "px";
-	this.paImage.style.left = 1015 + "px";
-	elem.appendChild(this.paImage);
-	
-	this.pattern = document.createElement('div');
-	this.pattern.style.color = "white";
-	this.pattern.style.position = 'absolute';
-	this.pattern.style.font = "20px Arial";
-	this.pattern.style.top = 110 + 'px';
-	this.pattern.style.left = 1020 + 'px';
-	this.pattern.innerHTML = "Pattern";
-	elem.appendChild(this.pattern);
-	
-	this.hImage = document.createElement('img');
-	this.hImage.src = "resources/images/GreenRounded.png";
-	this.hImage.style.position = 'absolute';
-	this.hImage.style.width = 170 + "px";
-	this.hImage.style.height = 23 + "px";
-	this.hImage.style.top = 135 + "px";
-	this.hImage.style.left = 1015 + "px";
-	elem.appendChild(this.hImage);
-	
-	this.hardware = document.createElement('div');
-	this.hardware.style.color = "white";
-	this.hardware.style.position = 'absolute';
-	this.hardware.style.font = "20px Arial";
-	this.hardware.style.top = 135 + 'px';
-	this.hardware.style.left = 1020 + 'px';
-	this.hardware.innerHTML = "Hardware";
-	elem.appendChild(this.hardware);
-	
+
 	this.kImage = document.createElement('img');
 	this.kImage.src = "resources/images/OrangeRounded.png";
 	this.kImage.style.position = 'absolute';
 	this.kImage.style.width = 170 + "px";
 	this.kImage.style.height = 23 + "px";
-	this.kImage.style.top = 160 + "px";
+	this.kImage.style.top = 110 + "px";
 	this.kImage.style.left = 1015 + "px";
 	elem.appendChild(this.kImage);
 	
@@ -143,7 +101,7 @@ Menu.prototype.initText = function(){ // initializes the text and color
 	this.kurmujin.style.color = "white";
 	this.kurmujin.style.position = 'absolute';
 	this.kurmujin.style.font = "20px Arial";
-	this.kurmujin.style.top = 160 + 'px';
+	this.kurmujin.style.top = 110 + 'px';
 	this.kurmujin.style.left = 1020 + 'px';
 	this.kurmujin.innerHTML = "Kurmujin";
 	elem.appendChild(this.kurmujin);
@@ -323,16 +281,6 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 													}
 												  }, 15, "resources/images/burger.png");
 	
-	//this.PatternShop.addOption("N/A", doAThing, 50, "resources/images/spiral.png");
-	//this.PatternShop.addOption("Star", doAThing, 50, "resources/images/star.png");
-	
-	this.HardwareShop.addOption("Connect", function() { if( that.fcns["checkAmount"](2) && that.cashCheck(100) ){
-															that.fcns["raycasterOn"]();
-															that.selectionFunc = function(){ that.connect(); };
-															alert("Click 2 Kurmujins. \nThe first kurmujin will explode the second kurmujin upon its demise\nWait for 2 dings");
-													    }
-													  }, 100, "resources/images/repeater.png");
-	
 	this.KurmujinShop.addOption("White", function() {if(that.cashCheck(6)) that.fcns["addKurmujin"](20, new Color(1,1,1), {x:0, y:0}, 4); } , 6, "resources/images/white.png");
 	this.KurmujinShop.addOption("Breed", function() { if( that.fcns["checkAmount"](2) && that.cashCheck(50) ){
 														 that.fcns["raycasterOn"]();
@@ -362,12 +310,6 @@ Menu.prototype.changeShop = function(type){ //Changes the visible shop and the b
 		case "Item": 		this.currentShop = this.ItemShop;
 							this.image.src = "resources/images/redBack.png";
 					 		break;
-		case "Pattern": 	this.currentShop = this.PatternShop;
-							this.image.src = "resources/images/yellowBack.png";
-					 		break;
-		case "Hardware": 	this.currentShop = this.HardwareShop;
-							this.image.src = "resources/images/greenBack.png";
-					 		break;
 		case "Kurmujin": 	this.currentShop = this.KurmujinShop;
 							this.image.src = "resources/images/orangeBack.png";
 					 		break;
@@ -393,11 +335,7 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 	if(mouseX >= 1020 && mouseX <= 1185
 		&& mouseY > 82.5 && mouseY <= 107.5) this.changeShop("Item");
 	if(mouseX >= 1020 && mouseX <= 1185
-		&& mouseY > 107.5 && mouseY <= 132.5) this.changeShop("Pattern");
-	if(mouseX >= 1020 && mouseX <= 1185
-		&& mouseY > 132.5 && mouseY <= 157.5) this.changeShop("Hardware");
-	if(mouseX >= 1020 && mouseX <= 1185
-		&& mouseY > 157.5 && mouseY <= 182.5) this.changeShop("Kurmujin");
+		&& mouseY > 107.5 && mouseY <= 132.5) this.changeShop("Kurmujin");
 		
 	/*
 	 * More complex check for each visible option
@@ -495,16 +433,6 @@ Menu.prototype.breed = function(){ //breeds two kurmujins
 Menu.prototype.feed = function(dSize){ //feeds a selected kurmujin
 	if(this.clicked.length > 0){
 		this.clicked[0].size += dSize;
-		this.fcns["raycasterOff"]();
-		this.selectionFunc = function(){};
-		this.clicked = null;
-	}
-}
-
-Menu.prototype.connect = function(){ //connect two kurmujins
-	if(this.clicked.length > 1){
-		this.clicked[0].toSignal.push(this.clicked[1]);
-		this.clicked.price += 50;
 		this.fcns["raycasterOff"]();
 		this.selectionFunc = function(){};
 		this.clicked = null;

@@ -33,13 +33,8 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.camera.position.x = 0;
 	this.camera.position.z = 1000;
 	
-	
-	
-	//Kurmujin Testing Code, will be deleted
-		this.addKurmujin(20, new Color(1, 1, 1), {x:0, y:0}, 4);
-	//End
-
-	
+	//Adds the new Kurmujin
+	this.addKurmujin(20, new Color(1, 1, 1), {x:0, y:0}, 4);
 	
 	this.renderer.render(this.scene, this.camera);
 	
