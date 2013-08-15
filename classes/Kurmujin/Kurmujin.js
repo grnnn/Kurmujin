@@ -3,7 +3,7 @@ var Kurmujin = function(size, color, position, price) {
   this.size = size;
   this.startSize = size;
   
-  this.count = this.size / 10;
+  this.sCount = this.size / 2;
   
   this.color = color;
   
@@ -68,12 +68,11 @@ Kurmujin.prototype.update = function() {
   this.count++;
   
   this.move(this.randomX, this.randomY);
+  
+  this.sCount = this.size / 2;
 
   this.myMaterial.uniforms['Size'].value = this.size;
   this.myMaterial.uniforms['startSize'].value = this.startSize;
-
-  
-  //cough cough, excuse me you forgot to add these...
   this.myMaterial.uniforms['Red'].value = this.color.red;
   this.myMaterial.uniforms['Green'].value = this.color.green;
   this.myMaterial.uniforms['Blue'].value = this.color.blue;
@@ -82,6 +81,7 @@ Kurmujin.prototype.update = function() {
 
 Kurmujin.prototype.getPrice = function() {
   this.price += this.size/5;
+
   return this.price;
 }
 

@@ -14,9 +14,11 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.currentShop = this.PaintShop;
 	
-
+<<<<<<< HEAD
 	this.cash = 50;
-
+=======
+	this.cash = 1000;
+>>>>>>> 3111b72b79a51c082ab24fc857869a47a76cf78c
 	this.fcns = fcns;
 	this.clicked = new Array();
 	

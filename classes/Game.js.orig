@@ -64,7 +64,11 @@ Game.prototype.init = function(){ // initializes the entire game
 	this.fcns["killKurmujin"] = function(i) { that.killKurmujin(i); }
 	this.fcns["raycasterOn"] = function(){ that.raycasterOn(); }
 	this.fcns["raycasterOff"] = function(){ that.raycasterOff(); }
+<<<<<<< HEAD
 	this.fcns["birthKurmujin"] = function(parent1, parent2){ that.birthKurmujin(parent1, parent2); }
+=======
+	this.fcns["birthKurmujin"] = function(p1, p2){ that.birthKurmujin(p1, p2); }
+>>>>>>> 3111b72b79a51c082ab24fc857869a47a76cf78c
 	this.fcns["checkAmount"] = function(amount){ return that.checkAmount(amount); }
 	this.fcns["snapShot"] = function(kurmujin){ return that.snapShot(kurmujin); }
 	
@@ -127,11 +131,17 @@ Game.prototype.birthKurmujin = function(parent1, parent2){ //breeds 2 kurmujins 
 }
 
 
-
-Game.prototype.killKurmujin = function(i){// kills a kurmujin, pops it, and puts up feedback
+<<<<<<< HEAD
+Game.prototype.killKurmujin = function(i){ // kills a kurmujin, pops it, and puts up feedback
+  this.splotch.addParticles(5, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
+  
+  this.mainMenu.addCash( this.kurmujins[i].getPrice() );
+=======
+Game.prototype.killKurmujin = function(i){
   this.splotch.addParticles(this.kurmujins[i].sCount, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
   
   this.mainMenu.addCash(this.kurmujins[i].getPrice());
+>>>>>>> 3111b72b79a51c082ab24fc857869a47a76cf78c
   
   this.scene.remove(this.kurmujins[i].body);
   
@@ -142,12 +152,14 @@ Game.prototype.killKurmujin = function(i){// kills a kurmujin, pops it, and puts
   
   this.splatSound.play();
   
-
+<<<<<<< HEAD
+  var feedBackText = new text2D("$" + Math.round(this.kurmujins[i].getPrice()), Math.random()*1000, (this.mouse.x + 1)*this.canvas.width/2, (2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
+=======
   var feedBackText = new text2D("$" + this.kurmujins[i].getPrice(), 
 								Math.random()*1000, 
 								(this.mouse.x + 1)*this.canvas.width/2, 
 								(2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
-
+>>>>>>> 3111b72b79a51c082ab24fc857869a47a76cf78c
   feedBackText.timer = 100;
   this.feedBack.push(feedBackText);
  
