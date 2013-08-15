@@ -3,4 +3,3 @@ var Color = function(r, g, b) {
   this.green = g;
   this.blue = b;
 };
-

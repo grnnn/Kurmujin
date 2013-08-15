@@ -8,6 +8,8 @@ var Option = function(pos, name, func, cost, image){
 	
 	this.src = image; // image url
 	
+	if(typeof image !== "string") this.bool = true;
+	else this.bool = false;
 	
 	this.elem = document.getElementById('gameArea');
 	
@@ -36,12 +38,13 @@ Option.prototype.init = function(){  // creates and positions the html elements 
 	this.money.style.font = "20px Arial";
 	this.money.style.top = (this.pos + 50) + 'px';
 	this.money.style.left = 1020 + 'px';
-	this.money.innerHTML = '$' + this.cost;
+	this.money.innerHTML = '$' + Math.round(this.cost);
 	
 	
 	this.image = document.createElement('img');
 	this.image.id = "image"+this.name;
-	this.image.src = this.src;
+	if(this.bool) this.image.innerHTML = this.src;
+	else this.image.src = this.src;
 	this.image.style.position = 'absolute';
 	this.image.style.width = 30 + "px";
 	this.image.style.height = 30 + "px";

@@ -1,4 +1,4 @@
-var Kurmujin = function(size, color, position) {
+var Kurmujin = function(size, color, position, price) {
   
   this.size = size;
   this.startSize = size;
@@ -10,6 +10,8 @@ var Kurmujin = function(size, color, position) {
   this.position = position;
   
   this.toSignal = new Array();
+  
+  this.price = price;
   
   var vertexShaderText = loadFile('classes/Kurmujin/Kurmujin.vert');
   var fragmentShaderText = loadFile('classes/Kurmujin/Kurmujin.frag');

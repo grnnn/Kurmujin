@@ -14,7 +14,7 @@ var Menu = function(fcns){ // Main menu object
 	
 	this.currentShop = this.PaintShop;
 	
-	this.cash = 100;
+	this.cash = 50;
 	this.fcns = fcns;
 	this.clicked = new Array();
 	
@@ -249,7 +249,32 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 														alert("Click on the kurmujin you wish to modify");
 													 }
 												   }, 15, "resources/images/magenta.png");
-
+	this.PaintShop.addOption("Brown", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(20)){
+														that.fcns["raycasterOn"](); 
+														that.selectionFunc = function(){ that.color( new Color(3/5, 1/5, 0) ); }; 
+														alert("Click on the kurmujin you wish to modify");
+													 }
+												   }, 20, "resources/images/brown.png");
+	this.PaintShop.addOption("Orange", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(20)){
+														that.fcns["raycasterOn"](); 
+														that.selectionFunc = function(){ that.color( new Color(1, 2/5, 0) ); }; 
+														alert("Click on the kurmujin you wish to modify");
+													 }
+												   }, 20, "resources/images/orange.png");
+	this.PaintShop.addOption("Purple", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(20)){
+														that.fcns["raycasterOn"](); 
+														that.selectionFunc = function(){ that.color( new Color(3/5, 0, 3/5) ); }; 
+														alert("Click on the kurmujin you wish to modify");
+													 }
+												   }, 20, "resources/images/purple.png");
+	this.PaintShop.addOption("Pink", function() { if(that.fcns["checkAmount"](1) && that.cashCheck(20)){
+														that.fcns["raycasterOn"](); 
+														that.selectionFunc = function(){ that.color( new Color(1, 1/5, 3/5) ); }; 
+														alert("Click on the kurmujin you wish to modify");
+													 }
+												   }, 20, "resources/images/pink.png");
+	
+	
 	
 	this.ItemShop.addOption("Donut",function() { if(that.fcns["checkAmount"](1) && that.cashCheck(10)){
 													that.fcns["raycasterOn"]();
@@ -274,7 +299,7 @@ Menu.prototype.initShops = function(){ //initializes what the shops contain
 													    }
 													  }, 100, "resources/images/repeater.png");
 	
-	this.KurmujinShop.addOption("White", function() {if(that.cashCheck(2)) that.fcns["addKurmujin"](20, new Color(1,1,1), {x:0, y:0}); } , 2, "resources/images/white.png");
+	this.KurmujinShop.addOption("White", function() {if(that.cashCheck(2)) that.fcns["addKurmujin"](20, new Color(1,1,1), {x:0, y:0}, 4); } , 2, "resources/images/white.png");
 	this.KurmujinShop.addOption("Breed", function() { if( that.fcns["checkAmount"](2) && that.cashCheck(50) ){
 														 that.fcns["raycasterOn"]();
 														 that.selectionFunc = function(){ that.breed(); };
@@ -348,13 +373,13 @@ Menu.prototype.listener = function(mouseX, mouseY){ //Listen for which type of e
 	 */
 	// Also check to see if an arrow has been clicked
 	if(mouseX > 1010 && mouseX < 1095
-		&& mouseY > 520 && mouseY < 560) {
+		&& mouseY > 520 && mouseY < 560 && this.left.visible) {
 			this.currentShop.prevPage();
 			this.arrowHandler();
 		}
 		
 	if(mouseX > 1110 && mouseX < 1195
-		&& mouseY > 520 && mouseY < 560) {
+		&& mouseY > 520 && mouseY < 560 && this.right.visible) {
 			this.currentShop.nextPage();
 			this.arrowHandler();
 		}
@@ -388,6 +413,11 @@ Menu.prototype.cashCheck = function(amount){ //takes away cash, also checks if o
 Menu.prototype.color = function(color){ //colors the kurmujin on the clicked stack
 	if(this.clicked.length > 0){
 		this.clicked[0].color = color;
+		var red, green, blue;
+		if(color.red == 0) red = 0; else red = 5/color.red;
+		if(color.green == 0) green = 0; else green = 5/color.green;
+		if(color.blue == 0) blue = 0; else blue = 5/color.blue;
+		this.clicked[0].price += red+green+blue; 
 		this.fcns["raycasterOff"]();
 		this.selectionFunc = function(){};
 		this.clicked = null;
@@ -398,9 +428,15 @@ Menu.prototype.rNumber = 1;
 Menu.prototype.register = function(){ //registers a kurmujin to be added at player will
 	var that = this;
 	if(this.clicked.length > 0){
+		var k = that.clicked[0];
 		var size = that.clicked[0].size;
 		var color = that.clicked[0].color;
-		this.KurmujinShop.addOption("Number " + this.rNumber, function() {that.fcns["addKurmujin"](size, color, {x:0, y:0})} , 20, "resources/images/burger.png");
+		var price = that.clicked[0].price;
+		var string = prompt("What would you like this to be called?", "Number "+this.rNumber);
+		this.KurmujinShop.addOption(string, function() { 
+														if(that.cashCheck(price/2)){ that.fcns["addKurmujin"](size, color, {x:0, y:0}, price) } 
+													   } , price/2, that.fcns["snapShot"](k) );
+		this.arrowHandler();
 		this.fcns["raycasterOff"]();
 		this.selectionFunc = function(){};
 		this.rNumber++;
@@ -410,8 +446,9 @@ Menu.prototype.register = function(){ //registers a kurmujin to be added at play
 }
 
 Menu.prototype.breed = function(){ //breeds two kurmujins
+	var that = this;
 	if(this.clicked.length > 1){
-		this.fcns["birthKurmujin"](this.clicked[0], this.clicked[1]);
+		this.fcns["birthKurmujin"](that.clicked[0], that.clicked[1]);
 		this.fcns["raycasterOff"]();
 		this.selectionFunc = function(){};
 		this.clicked = null;
@@ -430,6 +467,7 @@ Menu.prototype.feed = function(dSize){ //feeds a selected kurmujin
 Menu.prototype.connect = function(){ //connect two kurmujins
 	if(this.clicked.length > 1){
 		this.clicked[0].toSignal.push(this.clicked[1]);
+		this.clicked.price += 50;
 		this.fcns["raycasterOff"]();
 		this.selectionFunc = function(){};
 		this.clicked = null;

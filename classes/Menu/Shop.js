@@ -30,10 +30,7 @@ Shop.prototype.listener = function(mouseX, mouseY){ //check each visible option
 	for(var i = 4*(this.page - 1); i < 4*this.page; i++){
 		if(i == this.options.length) break;
 			this.options[i].listener(mouseX, mouseY);
-	}
-	
-	
-	
+	}	
 	
 }
 

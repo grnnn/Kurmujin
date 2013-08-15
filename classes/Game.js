@@ -36,7 +36,7 @@ Game.prototype.init = function(){ // initializes the entire game
 	
 	
 	//Kurmujin Testing Code, will be deleted
-		this.addKurmujin(20, new Color(1, 1, 1), {x:0, y:0});
+		this.addKurmujin(20, new Color(1, 1, 1), {x:0, y:0}, 4);
 	//End
 
 	
@@ -60,12 +60,13 @@ Game.prototype.init = function(){ // initializes the entire game
   this.scene.add(light);
 	
 	this.fcns = new Object();
-	this.fcns["addKurmujin"] = function(size, color, position){ that.addKurmujin(size, color, position); }
+	this.fcns["addKurmujin"] = function(size, color, position, price){ that.addKurmujin(size, color, position, price); }
 	this.fcns["killKurmujin"] = function(i) { that.killKurmujin(i); }
 	this.fcns["raycasterOn"] = function(){ that.raycasterOn(); }
 	this.fcns["raycasterOff"] = function(){ that.raycasterOff(); }
-	this.fcns["birthKurmujin"] = function(){ that.birthKurmujin(); }
+	this.fcns["birthKurmujin"] = function(parent1, parent2){ that.birthKurmujin(parent1, parent2); }
 	this.fcns["checkAmount"] = function(amount){ return that.checkAmount(amount); }
+	this.fcns["snapShot"] = function(kurmujin){ return that.snapShot(kurmujin); }
 	
 	this.mainMenu = new Menu(that.fcns);
 	
@@ -104,12 +105,12 @@ Game.prototype.init = function(){ // initializes the entire game
   	
 }
 
-Game.prototype.addKurmujin = function(size, color, position){
-  this.kurmujins.push(new Kurmujin(size, color, position));
+Game.prototype.addKurmujin = function(size, color, position, price){ // adds a new kurmujin of specified size, color, and position
+  this.kurmujins.push(new Kurmujin(size, color, position, price));
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
 }
 
-Game.prototype.birthKurmujin = function(parent1, parent2){
+Game.prototype.birthKurmujin = function(parent1, parent2){ //breeds 2 kurmujins to create an in between one
   
   var size = (parent1.size + parent2.size)/2;
   var color = new Color((parent1.color.red + parent2.color.red)/2,
@@ -117,16 +118,19 @@ Game.prototype.birthKurmujin = function(parent1, parent2){
 						(parent1.color.blue + parent2.color.blue)/2);
   var position = {x: (parent1.position.x + parent2.position.x)/2,
 				  y: (parent1.position.y + parent2.position.y)/2};
+  var price = parent1.price/2 + parent2.price/2;
   
-  this.kurmujins.push(new Kurmujin(size, color, position));
+  this.kurmujins.push(new Kurmujin(size, color, position, price));
   this.scene.add(this.kurmujins[this.kurmujins.length-1].body);
+  
+  
 }
 
 
-Game.prototype.killKurmujin = function(i){
+Game.prototype.killKurmujin = function(i){ // kills a kurmujin, pops it, and puts up feedback
   this.splotch.addParticles(5, this.kurmujins[i].color, this.kurmujins[i].position, this.kurmujins[i].size);
   
-  this.mainMenu.addCash(10);
+  this.mainMenu.addCash( this.kurmujins[i].getPrice() );
   
   this.scene.remove(this.kurmujins[i].body);
   
@@ -137,7 +141,7 @@ Game.prototype.killKurmujin = function(i){
   
   this.splatSound.play();
   
-  var feedBackText = new text2D("$" + 10, Math.random()*1000, (this.mouse.x + 1)*this.canvas.width/2, (2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
+  var feedBackText = new text2D("$" + Math.round(this.kurmujins[i].getPrice()), Math.random()*1000, (this.mouse.x + 1)*this.canvas.width/2, (2 - (this.mouse.y + 1))*this.canvas.height/2 - this.kurmujins[i].size/2 - 30);
   feedBackText.timer = 100;
   this.feedBack.push(feedBackText);
  
@@ -181,11 +185,12 @@ Game.prototype.mainInput = function(){ //Handling the main input of the game
 	  		for(var i = 0; i<this.kurmujins.length; i++) {
 	    		if(raycaster.intersectObject(this.kurmujins[i].body).length > 0) {
 				  this.clicked.push(this.kurmujins[i]);
+				  if(soundBool)this.dingSound.play();
         		}
 	  		}
 	  		
 	  		this.mainMenu.clicked = this.clicked;
-	  		if(soundBool)this.dingSound.play();
+	  		
 		}
 		
 		
@@ -236,7 +241,7 @@ Game.prototype.raycasterOff = function(){ //turns off the raycasting, also reset
 	this.clicked = new Array();
 }
 
-Game.prototype.checkAmount = function(amount){
+Game.prototype.checkAmount = function(amount){ //checks to see if there's a specified amount of kurmujins
 	if(this.kurmujins.length < amount){
 		if(this.kurmujins.length == 1) {alert("You can't do that with only 1 kurmujin");}
 		else {alert("You can't do that with " + this.kurmujins.length + " kurmujins");}
@@ -246,7 +251,24 @@ Game.prototype.checkAmount = function(amount){
 	return true;
 }
 
-Game.prototype.feedbackChecker = function(){
+Game.prototype.snapShot = function(kurmujin){
+	var cam = new THREE.PerspectiveCamera(45, 1.0/1.0, 1, 10000);
+	this.scene.add(cam);
+	
+	cam.position.x = kurmujin.body.position.x;
+	cam.position.y = kurmujin.body.position.y;
+	cam.position.z = 300;
+	cam.lookAt(kurmujin.body.position);
+	
+	var val = cam.renderTarget;
+	
+	this.scene.remove(cam);
+	cam = null;
+	
+	return val;
+}
+
+Game.prototype.feedbackChecker = function(){ //for each piece of feedback, get rid of it when it's time runs out
 	for(var i=0;i<this.feedBack.length;i++){
 		this.feedBack[i].timer--;
 		if(this.feedBack[i].timer == 0){
